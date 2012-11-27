@@ -9,3 +9,4 @@
    manual_structure/index
    about/index
    features/index
+   overview/index

@@ -1,0 +1,140 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>4. Zabbix概述 &mdash; Zabbix 2.0 Manual in Chinese</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="top" title="Zabbix 2.0 Manual in Chinese" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li><a href="../../index.html">Zabbix 2.0 Manual in Chinese</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="zabbix">
+<h1>4. Zabbix概述<a class="headerlink" href="#zabbix" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2>架构<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>Zabbix主线软件包中包含如下组件</p>
+<div class="section" id="server">
+<h3>Server<a class="headerlink" href="#server" title="永久链接至标题">¶</a></h3>
+<p>Zabbix Server为中心组件，用来获取agent存活状况及监控数据和统计.  所有的配置、统计、操作数据均通过Server进行存取.</p>
+</div>
+<div class="section" id="id2">
+<h3>数据库<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>所有的Zabbix数据均存储在数据库中</p>
+</div>
+<div class="section" id="web">
+<h3>Web接口<a class="headerlink" href="#web" title="永久链接至标题">¶</a></h3>
+<p>为了更简单的无障碍的访问Zabbix, 所以提供了web接口. 该接口作为Zabbix Server的一部分，通常(也有技术控不这样做)和server运行在同一台主机上.</p>
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">如果采用SQLite作为数据库，web接口和Zabbix Server必须运行在同一台主机上</p>
+</div>
+</div>
+<div class="section" id="proxy">
+<h3>Proxy<a class="headerlink" href="#proxy" title="永久链接至标题">¶</a></h3>
+<p>Zabbix Proxy能够代替Zabbix Server进行性能及可用性数据采集. Proxy是Zabbix部署的可选组件。 如果想分担单一Zabbix Server负载，推荐使用proxy.</p>
+</div>
+<div class="section" id="agent">
+<h3>Agent<a class="headerlink" href="#agent" title="永久链接至标题">¶</a></h3>
+<p>Zabbix agents 部署在目标监控机上并监控本地资源和应用，将收集数据汇报给Zabbix Server</p>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>数据流<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>In addition it is important to take a step back and have a look at the overall data flow within Zabbix. In order to create an item that gathers data you must first create a host. Moving to the other end of the Zabbix spectrum you must first have an item to create a trigger. You must have a trigger to create an action. Thus if you want to receive an alert that your CPU load it too high on Server X you must first create a host entry for Server X followed by an item for monitoring its CPU, then a trigger which activates if the CPU is too high, followed by an action which sends you an email. While that may seem like a lot of steps, with the use of templating it really isn&#8217;t. However, due to this design it is possible to create a very flexible setup.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4. Zabbix概述</a><ul>
+<li><a class="reference internal" href="#id1">架构</a><ul>
+<li><a class="reference internal" href="#server">Server</a></li>
+<li><a class="reference internal" href="#id2">数据库</a></li>
+<li><a class="reference internal" href="#web">Web接口</a></li>
+<li><a class="reference internal" href="#proxy">Proxy</a></li>
+<li><a class="reference internal" href="#agent">Agent</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id3">数据流</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/introduction/overview/overview.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="搜索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的模块，术语，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li><a href="../../index.html">Zabbix 2.0 Manual in Chinese</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; 版权所有 2012, pengyao.
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
