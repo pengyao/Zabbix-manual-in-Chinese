@@ -6,3 +6,4 @@
 .. toctree::
    
    manual_structure/index
+   about/index
