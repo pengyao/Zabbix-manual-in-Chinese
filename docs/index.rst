@@ -9,6 +9,7 @@ Zabbix手册
    :maxdepth: 1
    
    introduction/*
+   concepts/*
    
 
     

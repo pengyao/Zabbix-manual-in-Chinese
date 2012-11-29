@@ -15,7 +15,7 @@ Zabbix 2.0手册内容采用章节的形式，通过详细的标题更容易找�
 --------------
 简介 (尚未学会sphinx内链接方法)章节提供关于当前Zabbix软件的基本信息。 阅读本章节你将得到为什么选择zabbix的理由.
 
-Zabbix概念 章节将详解Zabbix术语及Zabbix组成.
+Zabbix术语 章节将详解Zabbix术语及Zabbix组成.
 
 安装 和 快速入门 章节将帮助你完成Zabbix入门, Zabbix appliance is an alternative for getting a quick taster of what it is like to use Zabbix.
 
@@ -31,7 +31,7 @@ Web监控 章节将帮助你学习如何监控网站的可用性
 
 分布式监控 章节将告诉你在大而复杂的环境下如何利用Zabbix完成监控.
 
-Web接口 章节将嘻嘻讲解Zabbix的web接口.
+Web接口 章节将详细讲解Zabbix的web接口.
 
 更多的技术信息将在 附录页 进行展示. 你也将会找到FAQ及Zabbix API 章节.
 
