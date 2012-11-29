@@ -1,0 +1,202 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2 Server &mdash; Zabbix 2.0 Manual in Chinese</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="top" title="Zabbix 2.0 Manual in Chinese" href="../../index.html" />
+    <link rel="up" title="2. Zabbix术语" href="../index.html" />
+    <link rel="prev" title="1 Zabbix名词解释" href="../definitons/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../definitons/index.html" title="1 Zabbix名词解释"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../../index.html">Zabbix 2.0 Manual in Chinese</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">2. Zabbix术语</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="server">
+<h1>2 Server<a class="headerlink" href="#server" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2>概述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>Zabbix server是Zabbix软件的中心进程.</p>
+<p>Server执行polling和trapping来采集数据，评估是否触发触发器，发送报警给用户. 它左右Zabbix agent和proxy的用来报告可用性和一致性数据的中心组件(译者注：好像翻译的部队，还是附上原文吧
+It is the central component to which Zabbix agents and proxies report data on availability and integrity of systems.)，Server也可以通过简单服务检查(simple service check)来完成远程网络服务检测.</p>
+<p>Server是所有配置、统计和操作数据的中心存储仓库，也是在所有的监控系统中扮演故障发生时通知管理员的角色.</p>
+<p>基础Zabbix server依据功能不同划分为三个部分，分别为:Zabbix server、web前端及数据库.</p>
+<p>由于Zabbix的所有的配置信息保存在数据库中，server和web前端可以直接进行操作。比如，通过web前端(或者API)创建一个新的监控项时，它将创建的数据插入数据库。一分钟左右Zabbix server会查询监控项数据表，并将查询的监控项
+列表保存在自己的缓存(cache)中。这也是为什么通过Zabbix前端进行的变更将在两分钟左右生效.</p>
+</div>
+<div class="section" id="id2">
+<h2>Server进程<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>Zabbix server以守护(daemon)进程方式运行，server可以通过以下命令启动:</p>
+<div class="highlight-python"><pre>shell&gt; cd sbin
+shell&gt; ./zabbix_server</pre>
+</div>
+<p>你也可以在启动Zabbix server时使用下面的命令行参数:</p>
+<div class="highlight-python"><pre>-c --config &lt;file&gt;               配置文件的绝对路径(默认是 /etc/zabbix/zabbix_server.conf)
+-n --new-nodeid &lt;nodeid&gt;         转换数据库，使用新的节点id
+-R --runtime-control &lt;option&gt;    运行管理命令
+-h --help                        显示本帮助
+-V --version                     显示版本号</pre>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">在 OpenBSD和NetBSD系统中，Runtime-control不被支持.</p>
+</div>
+<p>命令行参数例子如:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">shell</span><span class="o">&gt;</span> <span class="n">zabbix_server</span> <span class="o">-</span><span class="n">c</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">zabbix_server</span><span class="o">.</span><span class="n">conf</span>
+<span class="n">shell</span><span class="o">&gt;</span> <span class="n">zabbix_server</span> <span class="o">--</span><span class="n">help</span>
+<span class="n">shell</span><span class="o">&gt;</span> <span class="n">zabbix_server</span> <span class="o">-</span><span class="n">V</span>
+</pre></div>
+</div>
+<p><strong>Runtime control</strong></p>
+<p>Runtime control选项有:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="73%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">选项</th>
+<th class="head">描述</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>config_cache_reload</td>
+<td>重载配置缓存，如果配置缓存正在被加载中，将会忽略执行</td>
+</tr>
+</tbody>
+</table>
+<p>例如使用runtime contorl去重载server配置缓存:</p>
+<div class="highlight-python"><pre>shell&gt; zabbix_server -c /usr/local/etc/zabbix_server.conf -R config_cache_reload</pre>
+</div>
+<p><strong>进程账户</strong></p>
+<p>Zabbix设计运行在非root账户下。它可以运行在任何非root账户下。因此你可以运行Zabbix server在非root账户而不无需担心有问题.</p>
+<p>如果你想让server运行在&#8217;root&#8217;下，你必须在系统中调整已经默认写死的&#8217;zabbix&#8217;用户.</p>
+<p>These settings currently cannot be user configured, neither during compilation nor in the configuration file.</p>
+<p>如果Zabbix server和agent运行在同一台机器上，建议分别运行在不同的用户下，因为一旦运行的同一个用户下，agent将可以访问server的配置文件，并且能够轻松取得Zabbix Admin级别用户，例如，数据库密码</p>
+<p><strong>配置文件</strong></p>
+<p>请查询zabbix_server配置文件小节以获取详细信息</p>
+<p><strong>启动脚本</strong></p>
+<p>该类脚本用于在系统启动/关闭时自动启动/关闭zabbix进程，位于misc/init.d目录下.</p>
+<p><strong>支持平台</strong></p>
+<p>Due to the security requirements and mission-critical nature of server operation, UNIX is the only operating system that can consistently deliver the necessary performance, fault tolerance and resilience. Zabbix operates on market leading versions.</p>
+<p>Zabbix server在以下平台进行过测试:</p>
+<blockquote>
+<div><blockquote>
+<div><ul class="simple">
+<li>Linux</li>
+<li>Solaris</li>
+<li>AIX</li>
+<li>HP-UX</li>
+<li>Mac OS X</li>
+<li>FreeBSD</li>
+<li>OpenBSD</li>
+<li>NetBSD</li>
+<li>SCO Open Server</li>
+<li>Tru64/OSF1</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p class="last">Zabbix也许也可以在其他类Unix操作系统中运行良好</p>
+</div>
+</div></blockquote>
+<p>(linking to other sections, like zabbix maintenance etc)</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2 Server</a><ul>
+<li><a class="reference internal" href="#id1">概述</a></li>
+<li><a class="reference internal" href="#id2">Server进程</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="../definitons/index.html"
+                        title="上一章">1 Zabbix名词解释</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/concepts/server/index.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="搜索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的模块，术语，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../definitons/index.html" title="1 Zabbix名词解释"
+             >上一页</a> |</li>
+        <li><a href="../../index.html">Zabbix 2.0 Manual in Chinese</a> &raquo;</li>
+          <li><a href="../index.html" >2. Zabbix术语</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; 版权所有 2012, pengyao.
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
