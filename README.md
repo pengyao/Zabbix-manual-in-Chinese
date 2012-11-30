@@ -1,1 +1,1 @@
-Zabbix 2.0 manual in chinese (Powered by Sphinx) 
+Zabbix 2.2 come soon? 
