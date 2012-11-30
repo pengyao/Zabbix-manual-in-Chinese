@@ -1,1 +1,1 @@
-zabbix 2.0 中文手册
+zabbix 中文手册(Powered by sphinx)

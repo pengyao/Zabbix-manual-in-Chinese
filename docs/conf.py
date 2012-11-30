@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Zabbix 2.0 Manual in chinese'
+project = u'Zabbix Manual in Chinese'
 copyright = u'2012, pengyao'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -48,7 +48,7 @@ copyright = u'2012, pengyao'
 # built documents.
 #
 # The short X.Y version.
-version = ''
+version = '2.0'
 # The full version, including alpha/beta/rc tags.
 release = ''
 
@@ -103,7 +103,7 @@ html_theme = 'nature'
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-html_title = "Zabbix 2.0 Manual in Chinese"
+html_title = "Zabbix Manual in Chinese"
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #html_short_title = None
@@ -125,6 +125,7 @@ html_static_path = ['_static']
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
 #html_last_updated_fmt = '%b %d, %Y'
+html_last_updated_fmt = '%Y-%m-%d'
 
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.
@@ -164,7 +165,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'zabbixmanualinchinesedoc'
+htmlhelp_basename = 'Zabbix Manual in Chinese'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -183,7 +184,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'zabbixmanualinchinese.tex', u'zabbix manual in chinese Documentation',
+  ('index', 'Zabbix-manual-in-Chinese.tex', u'Zabbix manual in Chinese',
    u'pengyao', 'manual'),
 ]
 
