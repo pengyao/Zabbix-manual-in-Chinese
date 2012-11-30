@@ -1,1 +1,1 @@
-zabbix 中文手册(Powered by sphinx)
+Zabbix 2.0 manual in chinese (Powered by Sphinx) 
