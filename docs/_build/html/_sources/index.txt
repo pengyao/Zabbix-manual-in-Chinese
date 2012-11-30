@@ -10,6 +10,19 @@ Zabbix手册
    
    introduction/*
    concepts/*
-   
+   installation/*
+   quickstart/*
+   appliance/*
+   config/*
+   it_services/*
+   web_monitoring/*
+   maintenance/*
+   regular_expressions/*
+   acknowledges/*
+   xml_export_import/*
+   discovery/*
+   distributed_monitoring/*
+   web_interface/*
+   appendix/*
 
     
