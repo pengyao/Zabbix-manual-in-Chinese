@@ -13,9 +13,9 @@ Zabbix 2.0手册内容采用章节的形式，通过详细的标题更容易找�
 
 章节介绍
 --------------
-简介 (尚未学会sphinx内链接方法)章节提供关于当前Zabbix软件的基本信息。 阅读本章节你将得到为什么选择zabbix的理由.
+`简介 <../../introduction/index.html>`_ 章节提供关于当前Zabbix软件的基本信息。 阅读本章节你将得到为什么选择zabbix的理由.
 
-Zabbix术语 章节将详解Zabbix术语及Zabbix组成.
+`Zabbix术语 <../../concepts/index.html>`_ 章节将详解Zabbix术语及Zabbix组成.
 
 安装 和 快速入门 章节将帮助你完成Zabbix入门, Zabbix appliance is an alternative for getting a quick taster of what it is like to use Zabbix.
 

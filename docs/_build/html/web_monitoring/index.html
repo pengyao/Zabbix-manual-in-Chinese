@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>8. Web监控 (尚未开始) &mdash; Zabbix Manual in Chinese</title>
+    <title>8. Web监控 (进行中) &mdash; Zabbix Manual in Chinese</title>
     
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -52,8 +52,119 @@
           <div class="body">
             
   <div class="section" id="web">
-<h1>8. Web监控  (尚未开始)<a class="headerlink" href="#web" title="永久链接至标题">¶</a></h1>
-<p>尚未翻译</p>
+<h1><a class="toc-backref" href="#id3">8. Web监控  (进行中)</a><a class="headerlink" href="#web" title="永久链接至标题">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#web" id="id3">8. Web监控  (进行中)</a><ul>
+<li><a class="reference internal" href="#id1" id="id4">概述</a></li>
+<li><a class="reference internal" href="#id2" id="id5">配置一个方案</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id4">概述</a><a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>通过Zabbix你可以进行web站点的可用性检测.</p>
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">如果需要进行web监控，Zabbix server需要在安装的时候配置cURL(libcurl)支持.</p>
+</div>
+<p>为了进行web监控，你需要先定义一个web方案(scenarios). web方案包括一个或多个HTTP请求或&#8221;步骤(step)&#8221;. 步骤(step)的执行过程按照预先定义的顺序进行执行.</p>
+<p>在web方案中，可以获取如下信息:</p>
+<blockquote>
+<div><ul class="simple">
+<li>整个web方案中所有的步骤的平均下载速度</li>
+<li>失败的步骤号</li>
+<li>失败的报错信息</li>
+</ul>
+</div></blockquote>
+<dl class="docutils">
+<dt>在web方案的具体步骤中，可以获取到如下信息:</dt>
+<dd><ul class="first last simple">
+<li>该步骤的下载速度</li>
+<li>回应时间</li>
+<li>回应状态码</li>
+</ul>
+</dd>
+</dl>
+<p>Zabbix可以检查获取到的HTML页面中是否包含预先设置的字符串. 也可以完成登录和页面点击.</p>
+<p>Zabbix Web监控支持HTTP和HTTPS. 在同一个Web方案中，zabbix支持跳转，并且共享在整个执行过程中的cookies.</p>
+<blockquote>
+<div><div class="admonition tip">
+<p class="first admonition-title">小技巧</p>
+<p class="last">在使用HTTP代理时，请设置&#8217;http_proxy&#8217;变量. 例如&#8217;http_proxy=http://proxy_ip:proxy_port&#8217;; 如果想通过HTTP代理完成HTTPS检查，需要设置&#8217;HTTPS_PROXY&#8217;变量，例如&#8217;HTTPS_PROXY=http://proxy_ip:proxy_port&#8217;,更多详情请通过shell命令&#8217;man curl&#8217;获得.</p>
+</div>
+</div></blockquote>
+<p>整个web方案执行过程中，采集的数据将会直接保存在数据库中,并且完成自动绘图、触发器、告警通知. 详情请访问`Web监控项`.</p>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id5">配置一个方案</a><a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>创建web方案的首先需要创建一个合适的应用(application)，除非你已经有一个。 Web方案链接到组的应用.</p>
+<img alt="../_images/new_application_1.png" src="../_images/new_application_1.png" />
+<p>接下来，配置一个web方案:</p>
+<blockquote>
+<div><ul class="simple">
+<li>选择`Configuration -&gt; Web`</li>
+<li>选择右侧的`Create scenario`(或者编辑已经存在的方案名字)</li>
+<li>在表格中输入方案参数(parameter)</li>
+</ul>
+</div></blockquote>
+<p><em>Scenario</em> 允许在web方案中配置常用参数.</p>
+<img alt="../_images/scenario_1.png" src="../_images/scenario_1.png" />
+<p>常用参数有:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">参数</th>
+<th class="head">描述</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><cite>Application</cite></td>
+<td>选择本方案属于哪个应用(application),指定的application必须存在</td>
+</tr>
+<tr class="row-odd"><td><cite>Name</cite></td>
+<td>唯一的方案名</td>
+</tr>
+<tr class="row-even"><td><cite>Authentication</cite></td>
+<td><div class="first last line-block">
+<div class="line">认证选项.</div>
+<div class="line"><em>None</em> - 不用认证.</div>
+<div class="line"><em>Basic authentication</em> - 使用基本认证.</div>
+<div class="line"><em>NTLM authentication</em> - 使用NTLM(Windows NT LAN Manager)认证</div>
+<div class="line">如果选择认证方式的话，将新增两列，进行用户名和密码的填写</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><cite>Update interval</cite> (in sec)</td>
+<td>多长执行一次web方案监控,单位为秒</td>
+</tr>
+<tr class="row-even"><td><cite>Agent</cite></td>
+<td>选择客户端的agent接口,Zabbix提供一个选择框，这个对于不同浏览不能内容非常有用</td>
+</tr>
+<tr class="row-odd"><td>·Variables·</td>
+<td><div class="first last line-block">
+<div class="line">在方案步骤中(URL, POST变量)使用的变量(宏)</div>
+<div class="line">支持下面格式:</div>
+<div class="line"><em>{macro1}</em> =value1</div>
+<div class="line"><em>{macro2}</em> =value2</div>
+<div class="line">例如:</div>
+<div class="line">{username}=Alexei</div>
+<div class="line">{password}=kj3h5kj34bd</div>
+<div class="line">在步骤中可以引用{username}和{password}宏.Zabbix会自动替换为设定的值</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><cite>Active</cite></td>
+<td>如果选择这个框，方案将处于active状态，否则为disabled.</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 
 
@@ -62,6 +173,15 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">8. Web监控  (进行中)</a><ul>
+<li><a class="reference internal" href="#id1">概述</a></li>
+<li><a class="reference internal" href="#id2">配置一个方案</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>上一个主题</h4>
   <p class="topless"><a href="../it_services/index.html"
                         title="上一章">7. IT服务等级 (尚未开始)</a></p>
@@ -107,7 +227,7 @@
     </div>
     <div class="footer">
         &copy; 版权所有 2012, pengyao.
-      最后更新日期是 2012-11-30.
+      最后更新日期是 2012-12-01.
       使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
