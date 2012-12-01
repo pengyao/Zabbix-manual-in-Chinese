@@ -23,6 +23,4 @@ Zabbix中文手册
    discovery/*
    distributed_monitoring/*
    web_interface/*
-   appendix/*
-
-    
+   appendix/*  
