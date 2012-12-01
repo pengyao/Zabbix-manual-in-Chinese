@@ -1,0 +1,251 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1. Web监控项 &mdash; Zabbix Manual in Chinese</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="top" title="Zabbix Manual in Chinese" href="../../index.html" />
+    <link rel="up" title="8. Web监控 (进行中)" href="../index.html" />
+    <link rel="next" title="9. 维护 (尚未开始)" href="../../maintenance/index.html" />
+    <link rel="prev" title="8. Web监控 (进行中)" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../maintenance/index.html" title="9. 维护 (尚未开始)"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="8. Web监控 (进行中)"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../../index.html">Zabbix Manual in Chinese</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">8. Web监控  (进行中)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="web">
+<h1><a class="toc-backref" href="#id4">1. Web监控项</a><a class="headerlink" href="#web" title="永久链接至标题">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#web" id="id4">1. Web监控项</a><ul>
+<li><a class="reference internal" href="#id1" id="id5">概述</a></li>
+<li><a class="reference internal" href="#id2" id="id6">方案监控项</a></li>
+<li><a class="reference internal" href="#id3" id="id7">方案步骤监控项</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id5">概述</a><a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>当web方案创建成功后，新的监控项将会自动添加完成.</p>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id6">方案监控项</a><a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>一个方案创建完成后，Zabbix将会自动在链接的application中添加一下监控项.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="69%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">监控项</th>
+<th class="head">描述</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>·Download speed for scenario·
+<cite>&lt;Scenario&gt;</cite></td>
+<td><div class="first last line-block">
+<div class="line">该值为整个方案的下载速度(Bps)信息，例如 所有步骤的平均值</div>
+<div class="line">监控项键名: web.test.in[Scenario,,bps]</div>
+<div class="line">类型: <cite>Numeric(float)</cite>  小数</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><cite>Failed step of scenario</cite>
+<cite>&lt;Scenario&gt;</cite></td>
+<td><div class="first last line-block">
+<div class="line">该值将显示在整个方案中哪一步执行失败,如果所有步骤均是成功的，则返回 0</div>
+<div class="line">监控项键名: web.test.fail[Scenario]</div>
+<div class="line">类型：<cite>Numeric(unsigned)</cite>   自然数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><cite>Last error message of scenario</cite>
+<cite>&lt;Scenario&gt;</cite></td>
+<td><div class="first last line-block">
+<div class="line">该值将返回整个方案的报错信息</div>
+<div class="line">监控项键名: web.test.error[Scenario]</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>在实际环境中，请用真正的方案名替换&#8221;Scenario&#8221;.</p>
+<blockquote>
+<div><div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">Web监控项将自动添加30天历史和90天趋势保留时间</p>
+</div>
+</div></blockquote>
+<p>在创建触发器和告警时可以利用这些监控项.</p>
+<blockquote>
+<div><p><em>例子1</em></p>
+<p>创建一个&#8221;web方案失败&#8221;的触发器,你可以如此定义触发器的表达式:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="n">host</span><span class="p">:</span><span class="n">web</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">fail</span><span class="p">[</span><span class="n">Scenario</span><span class="p">]</span><span class="o">.</span><span class="n">last</span><span class="p">(</span><span class="mi">0</span><span class="p">)}</span><span class="c">#0</span>
+</pre></div>
+</div>
+<p>在实际环境中请将&#8217;Scenario&#8217;替换为你方案的真正名字.</p>
+<p><em>例子2</em></p>
+<p>创建一个&#8221;web方案非常慢&#8221;的触发器,你可以如此定义触发器的表达式:</p>
+<div class="highlight-python"><pre>{host:web.test.in[Scenario,,bps].last(0)}&lt;10000</pre>
+</div>
+<p>在实际环境中请将&#8217;Scenario&#8217;替换为你方案的真正名字.</p>
+</div></blockquote>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id7">方案步骤监控项</a><a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>在创建完一个步骤后，Zabbix会自动会在选择的应用中添加如下监控项.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="69%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">监控项</th>
+<th class="head">描述</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><cite>Download speed for step &lt;Step&gt;</cite>
+<cite>of scenario &lt;Scenario&gt;</cite></td>
+<td>该监控项为本步骤的下载速度(Bps).
+监控项键名: web.test.in[Scenario,Step,bps]
+类型: <cite>Numeric(float)</cite>   小数</td>
+</tr>
+<tr class="row-odd"><td><cite>Response time for step &lt;Step&gt;</cite>
+<cite>of scenario &lt;Scenario&gt;</cite></td>
+<td>该监控项将收集本步骤的响应时间(单位:秒)。
+响应时间指发起请求开始到所有数据接收完成的时间
+监控项键名: web.test.time[Scenario,Step]
+类型: <cite>Numeric(float)</cite>   小数</td>
+</tr>
+<tr class="row-even"><td><cite>Response code for step &lt;Step&gt;</cite>
+<cite>of scenario &lt;Scenario&gt;</cite></td>
+<td>该监控项将收集本步骤的响应状态码.
+监控项键名: web.test.rspcode[Scenario,Step]
+类型: <cite>Numeric(unsigned)</cite>  自然数</td>
+</tr>
+</tbody>
+</table>
+<p>在实际环境中请将&#8221;Scenario&#8221;及&#8221;Step&#8221;替换为环境中的真实名字.</p>
+<blockquote>
+<div><div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">Web监控项将自动添加30天历史和90天趋势保留时间</p>
+</div>
+</div></blockquote>
+<p>这些监控值可以用于创建触发器及定义告警条件.例如创建一个&#8221;Zabbix GUI登录太慢&#8221;的触发器，你可以如此定义触发器的表达式:</p>
+<div class="highlight-python"><pre>{zabbix:web.test.time[ZABBIX GUI,Login].last(0)}&gt;3</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1. Web监控项</a><ul>
+<li><a class="reference internal" href="#id1">概述</a></li>
+<li><a class="reference internal" href="#id2">方案监控项</a></li>
+<li><a class="reference internal" href="#id3">方案步骤监控项</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="../index.html"
+                        title="上一章">8. Web监控  (进行中)</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="../../maintenance/index.html"
+                        title="下一章">9. 维护  (尚未开始)</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/web_monitoring/items/index.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="搜索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的模块，术语，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../maintenance/index.html" title="9. 维护 (尚未开始)"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="8. Web监控 (进行中)"
+             >上一页</a> |</li>
+        <li><a href="../../index.html">Zabbix Manual in Chinese</a> &raquo;</li>
+          <li><a href="../index.html" >8. Web监控  (进行中)</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; 版权所有 2012, pengyao.
+      最后更新日期是 2012-12-01.
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
