@@ -46,8 +46,8 @@ Zabbix Web监控支持HTTP和HTTPS. 在同一个Web方案中，zabbix支持跳�
 
 接下来，配置一个web方案:
    
-   * 选择`Configuration -> Web`
-   * 选择右侧的`Create scenario`(或者编辑已经存在的方案名字)
+   * 选择 `Configuration -> Web`
+   * 选择右侧的 `Create scenario` (或者编辑已经存在的方案名字)
    * 在表格中输入方案参数(parameter)
    
 *Scenario* 允许在web方案中配置常用参数.
