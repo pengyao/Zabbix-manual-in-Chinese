@@ -1,0 +1,190 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2 方案真实场景 &mdash; Zabbix Manual in Chinese</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="top" title="Zabbix Manual in Chinese" href="../../index.html" />
+    <link rel="up" title="8. Web监控 (进行中)" href="../index.html" />
+    <link rel="next" title="9. 维护 (尚未开始)" href="../../maintenance/index.html" />
+    <link rel="prev" title="1. Web监控项" href="../items/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../maintenance/index.html" title="9. 维护 (尚未开始)"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="../items/index.html" title="1. Web监控项"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../../index.html">Zabbix Manual in Chinese</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">8. Web监控  (进行中)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1><a class="toc-backref" href="#id4">2 方案真实场景</a><a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#id1" id="id4">2 方案真实场景</a><ul>
+<li><a class="reference internal" href="#id2" id="id5">概述</a></li>
+<li><a class="reference internal" href="#id3" id="id6">方案</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id5">概述</a><a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>本小节将一步步地实现一个web监控的真实例子.</p>
+<p>使用Zabbix Web对Zabbix web接口进行监控，我们想监控它是否可用，是否提供正确的内容，响应速度等. 要完成本监控，需要知道Zabbix web接口的帐户名和密码.</p>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id6">方案</a><a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p><strong>第一步</strong></p>
+<p>添加一个新的主机应用(application).</p>
+<p>前往 <cite>Configuration</cite> -&gt; <cite>Host</cite> ,选择你想进行web监控的主机，点击`Applications`,在application页面点击 <cite>Create application</cite> .</p>
+<img alt="../../_images/new_application_1.png" src="../../_images/new_application_1.png" />
+<p>如果你已经有了一个合适的应用(application)，本步并不是必须的. 你也需要知道如果主机(host)不存在，如何去创建它.</p>
+<p><strong>第二步</strong></p>
+<p>添加一个新的web方案</p>
+<p>我们将添加一个为了监控Zabbix web接口的方案. 本方案将执行若干步骤(step).</p>
+<p>前往 <cite>Configuration</cite> -&gt; <cite>Web</cite> ，在下拉框中选择主机，然后点击 <cite>Create scenario</cite>.</p>
+<img alt="../../_images/new_scenario.png" src="../../_images/new_scenario.png" />
+<p>在这个新的方案表单中，点击 <cite>Select</cite> 选择我们刚刚添加的application.</p>
+<p>注意我们也需要创建两个宏，分别为{user}和{password}.</p>
+<p><strong>第三步</strong></p>
+<p>定义本方案的各个步骤(step).</p>
+<p>点击 <cite>Add</cite> 按钮选择添加步骤的 <cite>Steps</cite> 标签页.</p>
+<p><cite>Web方案第一步</cite></p>
+<p>我们首先创建检查首页回应的步骤，返回的状态码为 200,内容中包含&#8221;SIA Zabbix&#8221;字样.</p>
+<img alt="../../_images/scenario_step1.png" src="../../_images/scenario_step1.png" />
+<p>配置完成后，点击 <cite>Add</cite></p>
+<p><cite>Web方案第二步</cite></p>
+<p>我们需要登录到Zabbix前端，这就需要之前我们添加过两个宏,{user}和{password}</p>
+<img alt="../../_images/scenario_step2.png" src="../../_images/scenario_step2.png" />
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">Zabbix前端登录时使用JavaScript跳转,因此我们必须先完成登录，才能在后续步骤中完成登录后的检查. 同时登录步骤必须使用完整的URL到 <em>index.php</em> 页面.</p>
+</div>
+<p>所有的post变量必须在同一行,并且用 <em>&amp;</em> 符号进行连接. 例如登录Zabbix前端的字符串为:</p>
+<div class="highlight-python"><pre>name=Admin&amp;password=zabbix&amp;enter=Sign in</pre>
+</div>
+<p>如果在本例中使用宏，字符串将变成:</p>
+<div class="highlight-python"><pre>name={user}&amp;password={password}&amp;enter=Sign in</pre>
+</div>
+<p><cite>Web方案第三步</cite></p>
+<p>登录后，我们应该验证是否登录成功，因此我们在登录后的检查页面中含有的字符串，例如 <em>Profile</em> 链接在右上角</p>
+<img alt="../../_images/scenario_step3.png" src="../../_images/scenario_step3.png" />
+<p><cite>Web方案第四步</cite></p>
+<p>当前我们已经验证前端可以访问，并且我们已经进行了登录，并检查了登录后的内容，现在我们应该退出登录，除非Zabbix数据库中大量的已打开的session记录被清除.</p>
+<img alt="../../_images/scenario_step4.png" src="../../_images/scenario_step4.png" />
+<p><cite>完整步骤的配置</cite></p>
+<p>完成的步骤配置如下:</p>
+<img alt="../../_images/scenario_steps.png" src="../../_images/scenario_steps.png" />
+<p><strong>第四步</strong></p>
+<p>保存已完成的web监控方案.</p>
+<p>·Monitoring· -&gt; <cite>Web</cite> 下对应应用的方案如下:</p>
+<img alt="../../_images/web_checks.png" src="../../_images/web_checks.png" />
+<p>点击方案名，可以查看更详细的统计:</p>
+<img alt="../../_images/scenario_details.png" src="../../_images/scenario_details.png" />
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2 方案真实场景</a><ul>
+<li><a class="reference internal" href="#id2">概述</a></li>
+<li><a class="reference internal" href="#id3">方案</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="../items/index.html"
+                        title="上一章">1. Web监控项</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="../../maintenance/index.html"
+                        title="下一章">9. 维护  (尚未开始)</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/web_monitoring/example/index.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="搜索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的模块，术语，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../maintenance/index.html" title="9. 维护 (尚未开始)"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="../items/index.html" title="1. Web监控项"
+             >上一页</a> |</li>
+        <li><a href="../../index.html">Zabbix Manual in Chinese</a> &raquo;</li>
+          <li><a href="../index.html" >8. Web监控  (进行中)</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; 版权所有 2012, pengyao.
+      最后更新日期是 2012-12-02.
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
