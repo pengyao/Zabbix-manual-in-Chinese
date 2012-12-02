@@ -49,7 +49,7 @@ Zabbix Web监控支持HTTP和HTTPS. 在同一个Web方案中，zabbix支持跳�
 
 创建web方案的首先需要创建一个合适的应用(application)，除非你已经有一个。 Web方案链接到组的应用.
 
-.. image:: /_static/web_monitoring/images/new_application_1.png
+.. image:: /_static/images/web_monitoring/new_application.png
 
 接下来，配置一个web方案:
    
@@ -59,7 +59,7 @@ Zabbix Web监控支持HTTP和HTTPS. 在同一个Web方案中，zabbix支持跳�
    
 *Scenario* 允许在web方案中配置常用参数.
 
-.. image:: /_static/web_monitoring/images/scenario_1.png
+.. image:: /_static/images/web_monitoring/scenario_1.png
 
 常用参数有:
 
@@ -94,14 +94,14 @@ Zabbix Web监控支持HTTP和HTTPS. 在同一个Web方案中，zabbix支持跳�
 
 *Steps* 标签页允许你配置web方案步骤.
 
-.. image:: /_static/web_monitoring/images/scenario_2.png
+.. image:: /_static/images/web_monitoring/scenario_2.png
 
 配置步骤
 --------------------
 
 如果你想添加一个web方案步骤，请在 `Steps` 标签页中点击 `Add` 按钮.
 
-.. image:: /_static/web_monitoring/images/scenario_step.png
+.. image:: /_static/images/web_monitoring/scenario_step.png
 
 步骤(step)参数如下:
 
@@ -147,7 +147,7 @@ Zabbix Web监控支持HTTP和HTTPS. 在同一个Web方案中，zabbix支持跳�
 
 想获知web方案的详细数据，可以点击 `Monitoring` -> `Web` 或者 `Latest data` . 点击方案名字去查看更详细的统计数据.
 
-.. image:: /_static/web_monitoring/images/monitoring_web_details.png	  
+.. image:: /_static/images/web_monitoring/monitoring_web_details.png	  
 
 web监控方案的预览情况可以访问 `Monitoring` -> `Dashboard` .
 

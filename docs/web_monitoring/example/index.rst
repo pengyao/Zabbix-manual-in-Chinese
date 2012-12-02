@@ -20,7 +20,7 @@
 
 前往 `Configuration` -> `Host` ,选择你想进行web监控的主机，点击`Applications`,在application页面点击 `Create application` .
 
-.. image:: /_static/web_monitoring/images/new_application_1.png
+.. image:: /_static/images/web_monitoring/new_application.png
 
 如果你已经有了一个合适的应用(application)，本步并不是必须的. 你也需要知道如果主机(host)不存在，如何去创建它.
 
@@ -32,7 +32,7 @@
 
 前往 `Configuration` -> `Web` ，在下拉框中选择主机，然后点击 `Create scenario`.
 
-.. image:: /_static/web_monitoring/images/new_scenario.png
+.. image:: /_static/images/web_monitoring/new_scenario.png
 
 在这个新的方案表单中，点击 `Select` 选择我们刚刚添加的application.
 
@@ -48,7 +48,7 @@
 
 我们首先创建检查首页回应的步骤，返回的状态码为 200,内容中包含"SIA Zabbix"字样.
 
-.. image:: /_static/web_monitoring/images/scenario_step1.png
+.. image:: /_static/images/web_monitoring/scenario_step1.png
 
 配置完成后，点击 `Add` 
 
@@ -56,7 +56,7 @@
 
 我们需要登录到Zabbix前端，这就需要之前我们添加过两个宏,{user}和{password}
 
-.. image:: /_static/web_monitoring/images/scenario_step2.png
+.. image:: /_static/images/web_monitoring/scenario_step2.png
 
 .. warning::
     
@@ -74,21 +74,21 @@
 
 登录后，我们应该验证是否登录成功，因此我们在登录后的检查页面中含有的字符串，例如 *Profile* 链接在右上角
 
-.. image:: /_static/web_monitoring/images/scenario_step3.png
+.. image:: /_static/images/web_monitoring/scenario_step3.png
 
 
 `Web方案第四步`
 
 当前我们已经验证前端可以访问，并且我们已经进行了登录，并检查了登录后的内容，现在我们应该退出登录，除非Zabbix数据库中大量的已打开的session记录被清除.
 
-.. image:: /_static/web_monitoring/images/scenario_step4.png
+.. image:: /_static/images/web_monitoring/scenario_step4.png
 
 
 `完整步骤的配置`
 
 完成的步骤配置如下:
 
-.. image:: /_static/web_monitoring/images/scenario_steps.png
+.. image:: /_static/images/web_monitoring/scenario_steps.png
 
 
 **第四步**
@@ -97,11 +97,11 @@
 
 ·Monitoring· -> `Web` 下对应应用的方案如下:
 
-.. image:: /_static/web_monitoring/images/web_checks.png
+.. image:: /_static/images/web_monitoring/web_checks.png
 
 点击方案名，可以查看更详细的统计:
 
-.. image:: /_static/web_monitoring/images/scenario_details.png
+.. image:: /_static/images/web_monitoring/scenario_details.png
 
 
 
