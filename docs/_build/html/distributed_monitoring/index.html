@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>14. 分布式监控 (尚未开始) &mdash; Zabbix Manual in Chinese</title>
+    <title>14. 分布式监控 (进行中) &mdash; Zabbix Manual in Chinese</title>
     
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/translations.js"></script>
     <link rel="top" title="Zabbix Manual in Chinese" href="../index.html" />
-    <link rel="next" title="15. Web接口 (尚未开始)" href="../web_interface/index.html" />
+    <link rel="next" title="1 代理" href="proxies/index.html" />
     <link rel="prev" title="13. 自动发现 (尚未开始)" href="../discovery/index.html" /> 
   </head>
   <body>
@@ -37,7 +37,7 @@
           <a href="../genindex.html" title="总目录"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="../web_interface/index.html" title="15. Web接口 (尚未开始)"
+          <a href="proxies/index.html" title="1 代理"
              accesskey="N">下一页</a> |</li>
         <li class="right" >
           <a href="../discovery/index.html" title="13. 自动发现 (尚未开始)"
@@ -52,8 +52,96 @@
           <div class="body">
             
   <div class="section" id="id1">
-<h1>14. 分布式监控  (尚未开始)<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
-<p>尚未翻译</p>
+<h1><a class="toc-backref" href="#id3">14. 分布式监控 (进行中)</a><a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="proxies/index.html">1 代理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/index.html">2 节点 (尚未翻译)</a></li>
+</ul>
+</div>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#id1" id="id3">14. 分布式监控 (进行中)</a><ul>
+<li><a class="reference internal" href="#id2" id="id4">概述</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id4">概述</a><a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>Zabbix提供有效并且可靠的方式去完成监控分布式IT架构。在大型环境中Zabbix提供两种解决方案:</p>
+<blockquote>
+<div><ul class="simple">
+<li>使用 <a class="reference external" href="proxies/index.html">代理(proxy)</a></li>
+<li>使用 <a class="reference external" href="nodes/index.html">节点(node)</a></li>
+</ul>
+</div></blockquote>
+<p>代理(proxy)用于本区域数据收集，并将数据发送给server。节点(node)提供提供完整的Zabbix server用以建立分布式监控中的层级.</p>
+<p><strong>代理 vs 节点</strong></p>
+<p>在选择是使用代理还是节点时，需要考虑众多因素.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="53%" />
+<col width="24%" />
+<col width="24%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">特性</th>
+<th class="head">代理</th>
+<th class="head">节点</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>轻量级</td>
+<td><strong>Yes</strong></td>
+<td>No</td>
+</tr>
+<tr class="row-odd"><td>GUI</td>
+<td>No</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="row-even"><td>独立工作</td>
+<td><strong>Yes</strong></td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="row-odd"><td>易维护</td>
+<td><strong>Yes</strong></td>
+<td>No</td>
+</tr>
+<tr class="row-even"><td>自动数据表创建</td>
+<td><strong>Yes</strong></td>
+<td>No</td>
+</tr>
+<tr class="row-odd"><td>本地管理</td>
+<td>No</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="row-even"><td>嵌入式硬件设备</td>
+<td><strong>Yes</strong></td>
+<td>No</td>
+</tr>
+<tr class="row-odd"><td>TCP连接</td>
+<td><strong>Yes</strong></td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="row-even"><td>中心配置</td>
+<td><strong>Yes</strong></td>
+<td>No</td>
+</tr>
+<tr class="row-odd"><td>告警通知</td>
+<td>No</td>
+<td><strong>Yes</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div><div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last"><em>自动数据表创建</em> 只应用于SQLite数据库，其他数据库需要手动建立</p>
+</div>
+</div></blockquote>
+</div>
 </div>
 
 
@@ -62,12 +150,20 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">14. 分布式监控 (进行中)</a><ul>
+<li><a class="reference internal" href="#id2">概述</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>上一个主题</h4>
   <p class="topless"><a href="../discovery/index.html"
                         title="上一章">13. 自动发现  (尚未开始)</a></p>
   <h4>下一个主题</h4>
-  <p class="topless"><a href="../web_interface/index.html"
-                        title="下一章">15. Web接口  (尚未开始)</a></p>
+  <p class="topless"><a href="proxies/index.html"
+                        title="下一章">1 代理</a></p>
   <h3>本页</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/distributed_monitoring/index.txt"
@@ -97,7 +193,7 @@
           <a href="../genindex.html" title="总目录"
              >索引</a></li>
         <li class="right" >
-          <a href="../web_interface/index.html" title="15. Web接口 (尚未开始)"
+          <a href="proxies/index.html" title="1 代理"
              >下一页</a> |</li>
         <li class="right" >
           <a href="../discovery/index.html" title="13. 自动发现 (尚未开始)"
@@ -107,7 +203,7 @@
     </div>
     <div class="footer">
         &copy; 版权所有 2012, pengyao.
-      最后更新日期是 2012-12-01.
+      最后更新日期是 2012-12-02.
       使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>

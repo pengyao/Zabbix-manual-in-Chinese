@@ -1,0 +1,276 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1 代理 &mdash; Zabbix Manual in Chinese</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="top" title="Zabbix Manual in Chinese" href="../../index.html" />
+    <link rel="up" title="14. 分布式监控" href="../index.html" />
+    <link rel="next" title="2 节点 (尚未翻译)" href="../nodes/index.html" />
+    <link rel="prev" title="14. 分布式监控" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../nodes/index.html" title="2 节点 (尚未翻译)"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="14. 分布式监控"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../../index.html">Zabbix Manual in Chinese</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">14. 分布式监控</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1><a class="toc-backref" href="#id4">1 代理</a><a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#id1" id="id4">1 代理</a><ul>
+<li><a class="reference internal" href="#id2" id="id5">概述</a></li>
+<li><a class="reference internal" href="#id3" id="id6">配置</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id5">概述</a><a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>Zabbix代理能够取代Zabbix server去收集性能和可行用数据. 因此代理常用于完成Zabbix server数据收集工作并降低server负载.</p>
+<p>同时，使用代理也是在集中和分布式监控中最简单的实现方案，所有的agent和代理数据将发送给一个Zabbix server,所有数据集中存储.</p>
+<p>Zabbix代理常用于以下场景:</p>
+<blockquote>
+<div><ul class="simple">
+<li>监控远程区域</li>
+<li>Monitor locations having unreliable communications</li>
+<li>当监控成千上万设备时，采用代理有效降低Zabbix server负载</li>
+<li>易于维护的分布式监控场景</li>
+</ul>
+</div></blockquote>
+<img alt="../../_images/proxy.png" src="../../_images/proxy.png" />
+<p>代理和Zabbix server通信采用TCP连接，因此你只需要配置一条防火墙规则即可.</p>
+<blockquote>
+<div><div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">Zabbix代理必须使用独立的数据库，否则指向Zabbix server数据库将损坏配置.</p>
+</div>
+</div></blockquote>
+<p>在将数据发送给server之前，所有的数据都会存储在代理本地. 用这种策略是为了防止server出现问题时丢失数据. 代理配置文件中参数 <em>ProxyLocalBuffer</em> 和 <em>ProxyOffineBuffer</em> 用来控制数据保存在本地多久.</p>
+<p>Zabbix代理是一个数据收集器.它不含有触发器,事件和发送告警功能. 下表将列出来代理的功能:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="56%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">功能</th>
+<th class="head">代理是否支持本功能</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Zabbix agent check</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="row-odd"><td>Zabbix agent checks(active)</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="row-even"><td>Simple checks</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="row-odd"><td>Trapper items</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="row-even"><td>SNMP checks</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="row-odd"><td>SNMP traps</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="row-even"><td>IPMI checks</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="row-odd"><td>JMX checks</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="row-even"><td>Log file monitoring</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="row-odd"><td>Internal checks</td>
+<td>No</td>
+</tr>
+<tr class="row-even"><td>SSH checks</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="row-odd"><td>Telnet checks</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="row-even"><td>External checks</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="row-odd"><td>Built-in web monitoring</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="row-even"><td>Network discovery</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="row-odd"><td>Low-level discovery</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="row-even"><td>Calculating triggers</td>
+<td>No</td>
+</tr>
+<tr class="row-odd"><td>Processing events</td>
+<td>No</td>
+</tr>
+<tr class="row-even"><td>Sending alerts</td>
+<td>No</td>
+</tr>
+<tr class="row-odd"><td>Remote commands</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div><div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">为确保agent可以询问代理进行active checks,代理必须存在于agent的配置文中的 <strong>ServerActive</strong> 参数中.</p>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id6">配置</a><a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>一旦你安装和配置成功代理，是时候完成Zabbix前端的配置了.</p>
+<p><strong>添加代理</strong></p>
+<p>在Zabbix前端中配置代理:</p>
+<div class="highlight-python"><pre>*前往 `Administration` -&gt; `DM`
+*在右上角的下拉框中选择 `Proxies`
+*点击 `Create proxy` 或者点击已存在的代理名称</pre>
+</div>
+<img alt="../../_images/proxy1.png" src="../../_images/proxy1.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">参数</th>
+<th class="head">描述</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><cite>Proxy name</cite></td>
+<td>输入代理名称. 该值必须和代理配置文件中的 <strong>Hostname</strong> 参数内容相同</td>
+</tr>
+<tr class="row-odd"><td><cite>Proxy mode</cite></td>
+<td>选择代理方式
+<strong>Active</strong> - 代理将主动连接Zabbix server请求配置数据
+<strong>Passive</strong> - Zabbix server连接代理</td>
+</tr>
+<tr class="row-even"><td><cite>Hosts</cite></td>
+<td>选择需要通过本代理进行监控的主机</td>
+</tr>
+</tbody>
+</table>
+<p><strong>主机配置</strong></p>
+<p>你也可以在主机配置表单中选择代理,使用 <strong>Monitored by proxy</strong></p>
+<img alt="../../_images/proxy_set.png" src="../../_images/proxy_set.png" />
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1 代理</a><ul>
+<li><a class="reference internal" href="#id2">概述</a></li>
+<li><a class="reference internal" href="#id3">配置</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="../index.html"
+                        title="上一章">14. 分布式监控</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="../nodes/index.html"
+                        title="下一章">2 节点 (尚未翻译)</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/distributed_monitoring/proxies/index.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="搜索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的模块，术语，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../nodes/index.html" title="2 节点 (尚未翻译)"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="14. 分布式监控"
+             >上一页</a> |</li>
+        <li><a href="../../index.html">Zabbix Manual in Chinese</a> &raquo;</li>
+          <li><a href="../index.html" >14. 分布式监控</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; 版权所有 2012, pengyao.
+      最后更新日期是 2012-12-02.
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
