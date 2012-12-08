@@ -1,0 +1,159 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>7 Get &mdash; Zabbix Manual in Chinese</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="top" title="Zabbix Manual in Chinese" href="../../index.html" />
+    <link rel="up" title="2. Zabbix术语" href="../index.html" />
+    <link rel="next" title="3. 安装 (尚未开始)" href="../../installation/index.html" />
+    <link rel="prev" title="6 Sender" href="../sender/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../installation/index.html" title="3. 安装 (尚未开始)"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="../sender/index.html" title="6 Sender"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../../index.html">Zabbix Manual in Chinese</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">2. Zabbix术语</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="get">
+<h1><a class="toc-backref" href="#id2">7  Get</a><a class="headerlink" href="#get" title="永久链接至标题">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#get" id="id2">7  Get</a><ul>
+<li><a class="reference internal" href="#id1" id="id3">概述</a></li>
+<li><a class="reference internal" href="#zabbix-get" id="id4">运行Zabbix get</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id3">概述</a><a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>Zabbix get用于连接Zabbix agent并从agent上检索需要的信息.</p>
+<p>该工具常用于对Zabbix agent进行troubleshooting.</p>
+</div>
+<div class="section" id="zabbix-get">
+<h2><a class="toc-backref" href="#id4">运行Zabbix get</a><a class="headerlink" href="#zabbix-get" title="永久链接至标题">¶</a></h2>
+<p>在UNIX平台上运行Zabbix get 获得指定的agent上的进程负载:</p>
+<div class="highlight-python"><pre>shell&gt; cd bin
+shell&gt; ./zabbix_get -s 127.0.0.1 -p 10050 -k "system.cpu.load[all,avg1]"</pre>
+</div>
+<p>Zabbix get支持以下命令行参数:</p>
+<div class="highlight-python"><pre>-s --host &lt;主机名或IP&gt;                  指定agent所在的主机或IP地址
+-p --port &lt;端口号&gt;                      指定主机所运行的agent的端口号，默认为10050
+-I --source-address &lt;IP地址&gt;            指定源IP地址
+-k --key &lt;item key&gt;                     指定需要检索的监控项键名
+-h --help                               显示本帮助
+-V --version                            显示版本号</pre>
+</div>
+<p>在Windows平台下运行Zabbix get类似:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">zabbix_get</span><span class="o">.</span><span class="n">exe</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7  Get</a><ul>
+<li><a class="reference internal" href="#id1">概述</a></li>
+<li><a class="reference internal" href="#zabbix-get">运行Zabbix get</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="../sender/index.html"
+                        title="上一章">6  Sender</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="../../installation/index.html"
+                        title="下一章">3. 安装 (尚未开始)</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/concepts/get/index.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="搜索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的模块，术语，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../installation/index.html" title="3. 安装 (尚未开始)"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="../sender/index.html" title="6 Sender"
+             >上一页</a> |</li>
+        <li><a href="../../index.html">Zabbix Manual in Chinese</a> &raquo;</li>
+          <li><a href="../index.html" >2. Zabbix术语</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; 版权所有 2012, pengyao.
+      最后更新日期是 2012-12-08.
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

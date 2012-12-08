@@ -1,5 +1,5 @@
 ======================
-2. Zabbix术语 (进行中)
+2. Zabbix术语
 ======================
 
 .. toctree::
@@ -11,3 +11,4 @@
    proxy/index
    java/index
    sender/index
+   get/index
