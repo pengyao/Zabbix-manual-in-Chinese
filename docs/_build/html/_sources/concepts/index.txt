@@ -8,3 +8,5 @@
    definitons/index
    server/index
    agent/index
+   proxy/index
+   java/index

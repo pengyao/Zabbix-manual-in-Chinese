@@ -1,0 +1,199 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>4 代理 &mdash; Zabbix Manual in Chinese</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="top" title="Zabbix Manual in Chinese" href="../../index.html" />
+    <link rel="up" title="2. Zabbix术语 (进行中)" href="../index.html" />
+    <link rel="next" title="3. 安装 (尚未开始)" href="../../installation/index.html" />
+    <link rel="prev" title="3 Agent" href="../agent/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../installation/index.html" title="3. 安装 (尚未开始)"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="../agent/index.html" title="3 Agent"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../../index.html">Zabbix Manual in Chinese</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">2. Zabbix术语 (进行中)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1><a class="toc-backref" href="#id4">4  代理</a><a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#id1" id="id4">4  代理</a><ul>
+<li><a class="reference internal" href="#id2" id="id5">概述</a></li>
+<li><a class="reference internal" href="#id3" id="id6">代理进程</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id5">概述</a><a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>Zabbix代理(proxy)通常用于替代server完成对多个监控设备收集监控信息并将数据发送给Zabbix server. 所有的收集数据会先存储在代理本地缓存中然后传送给Zabbix server.</p>
+<p>代理是可选的,不过使用它可以有效的降低在分布式环境中单一的Zabbix server负载. 通过代理去收集收集，server可以有效降低CPU和磁盘I/O消耗.</p>
+<p>Zabbix代理可以出色的完成远程区域、分支机构、没有本地管理员的网络的集中监控.</p>
+<p>Zabbix代理使用独立的数据库.</p>
+<blockquote>
+<div><div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">Zabbix proxy数据库可以使用SQLite, MySQL, PostgreSQL. 如果Oracle或IBM DB2在低等级自动发现规则时存在限制和风险.</p>
+</div>
+</div></blockquote>
+<p>可以查看: <cite>在分布式环境中使用代理</cite></p>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id6">代理进程</a><a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>Zabbix代理可以作为守护进程运行. 通过以下命令可以启动代理:</p>
+<div class="highlight-python"><pre>shell&gt; cd sbin
+shell&gt; ./zabbix_proxy</pre>
+</div>
+<p>以下命令行参数也可以在运行Zabbix proxy时使用:</p>
+<div class="highlight-python"><pre>-c --config &lt;file&gt;                       指定配置文件的绝对路径
+-R --runtime-control &lt;option&gt;            运行管理功能
+-h --help                                显示本帮助
+-V --version                             显示版本号</pre>
+</div>
+<p>使用命令行参数例子:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">shell</span><span class="o">&gt;</span> <span class="n">zabbix_proxy</span> <span class="o">-</span><span class="n">c</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">zabbix_proxy</span><span class="o">.</span><span class="n">conf</span>
+<span class="n">shell</span><span class="o">&gt;</span> <span class="n">zabbix_proxy</span> <span class="o">--</span><span class="n">help</span>
+<span class="n">shell</span><span class="o">&gt;</span> <span class="n">zabbix_proxy</span> <span class="o">-</span><span class="n">V</span>
+</pre></div>
+</div>
+<p><strong>运行时控制</strong></p>
+<p>运行时控制参数有:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="85%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">选项</th>
+<th class="head">描述</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>config_cache_reload</td>
+<td>重新加载配置数据缓存，如果配置缓存正在被加载将忽略该操作. 主动方式运行的Zabbix代理将会连接Zabbix server请求配置数据</td>
+</tr>
+</tbody>
+</table>
+<p>在运行时重新加载代理配置数据缓存的例子:</p>
+<div class="highlight-python"><pre>shell&gt; zabbix_proxy -c /usrlocal/etc/zabbix_proxy.conf -R config_cache_reload</pre>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">运行时控制当前不支持OpenBSD和NetBSD.</p>
+</div>
+<p><strong>进程用户</strong></p>
+<p>Zabbix代理设计运行在非root账户下，因此它可以完美运行在启动时的非root账户.</p>
+<p>如果你在&#8217;root&#8217;账户运行，它将自动选择之前已经在操作系统建立的&#8217;zabbix&#8217;用户.</p>
+<p>用户当前无法在编译时或在配置文件中进行配置.</p>
+<p><strong>配置文件</strong></p>
+<p>欲了解更多zabbix_proxy配置选项请访问 <cite>配置文件</cite> 章节.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4  代理</a><ul>
+<li><a class="reference internal" href="#id2">概述</a></li>
+<li><a class="reference internal" href="#id3">代理进程</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="../agent/index.html"
+                        title="上一章">3  Agent</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="../../installation/index.html"
+                        title="下一章">3. 安装 (尚未开始)</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/concepts/proxy/index.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="搜索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的模块，术语，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../installation/index.html" title="3. 安装 (尚未开始)"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="../agent/index.html" title="3 Agent"
+             >上一页</a> |</li>
+        <li><a href="../../index.html">Zabbix Manual in Chinese</a> &raquo;</li>
+          <li><a href="../index.html" >2. Zabbix术语 (进行中)</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; 版权所有 2012, pengyao.
+      最后更新日期是 2012-12-08.
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
