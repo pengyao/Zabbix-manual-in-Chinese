@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2 节点 (尚未翻译) &mdash; Zabbix Manual in Chinese</title>
+    <title>2 节点 &mdash; Zabbix Manual in Chinese</title>
     
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/translations.js"></script>
     <link rel="top" title="Zabbix Manual in Chinese" href="../../index.html" />
-    <link rel="up" title="14. 分布式监控 (进行中)" href="../index.html" />
+    <link rel="up" title="14. 分布式监控" href="../index.html" />
     <link rel="next" title="15. Web接口 (尚未开始)" href="../../web_interface/index.html" />
     <link rel="prev" title="1 代理" href="../proxies/index.html" /> 
   </head>
@@ -44,7 +44,7 @@
           <a href="../proxies/index.html" title="1 代理"
              accesskey="P">上一页</a> |</li>
         <li><a href="../../index.html">Zabbix Manual in Chinese</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">14. 分布式监控 (进行中)</a> &raquo;</li> 
+          <li><a href="../index.html" accesskey="U">14. 分布式监控</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -54,7 +54,221 @@
           <div class="body">
             
   <div class="section" id="id1">
-<h1>2 节点 (尚未翻译)<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<h1><a class="toc-backref" href="#id9">2 节点</a><a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#id1" id="id9">2 节点</a><ul>
+<li><a class="reference internal" href="#id2" id="id10">概述</a></li>
+<li><a class="reference internal" href="#id3" id="id11">配置</a><ul>
+<li><a class="reference internal" href="#id4" id="id12">节点配置</a></li>
+<li><a class="reference internal" href="#id5" id="id13">前端配置(主节点)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6" id="id14">前端配置(子节点)</a><ul>
+<li><a class="reference internal" href="#server" id="id15">启动server守护进程</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7" id="id16">显示</a></li>
+<li><a class="reference internal" href="#id8" id="id17">更复杂的配置</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id10">概述</a><a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>你可以利用节点(node)在分布式环境中建立层级(hierarchy)结构.</p>
+<p>每一个节点(node)具有完整的Zabbix server特性，监控本地区域. Zabbix在分布式环境中支持多达上千个节点.</p>
+<p>建立节点(node)的好处:</p>
+<blockquote>
+<div><ul class="simple">
+<li>在大型网络环境(包括果然物理区域)中利用节点可以建立一个多层级的监控环境. 层级中的每一个节点(node)汇报对象只有它的主(master)节点.</li>
+<li>节点可以进行本地配置或者通过它的主(具有所有子节点配置数据)完成配置.</li>
+<li>当连通出现问题时，数据聚合不受影响。 当主节点与子节点连接失败时，及节点将继续执行,历史数据和事件将存储在本地. 当连接恢复后，子节点将随时发送数据至主节点.</li>
+<li>节点将切分原先单一Zabbix server功能，进而进行监控成千上万主机.</li>
+<li>附属分离新节点并不会影响已存在的功能, 也不需要重启其他节点.</li>
+</ul>
+</div></blockquote>
+<p><strong>平台独立</strong></p>
+<p>节点可能使用自己的平台(OS, 硬件)和数据库，而与其他节点相互独立. 当然子节点可以不安装Zabbix前端.</p>
+<p>更高登记的节点应该使用更好的硬件，用MySQL InnoDB、Oracle或者PostgreSQL作为数据后端.</p>
+<blockquote>
+<div><div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">使用SQLite作为数据库后端分布式监控将无法运行.</p>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id11">配置</a><a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id12">节点配置</a><a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>Zabbix server可以标准安装而不配置作为分布式环境中的一个节点. 可以通过以下配置把它作为一个节点:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">在server配置文件(zabbix_server.conf)中指定唯一的 <strong>NodeID</strong> ，允许的数字为: 1-999 (0为独立server的默认值)</p>
+</li>
+<li><p class="first">关闭Zabbix_server,确保当前没有运行.</p>
+</li>
+<li><p class="first">为分布式建立转换数据库数据，通过运行:</p>
+<div class="highlight-python"><pre>zabbix_server -n &lt;node id&gt;</pre>
+</div>
+</li>
+</ul>
+</div></blockquote>
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">请注意该命令只能运行一次.运行两次将损坏数据库,请确保运行时使用了正确的节点ID</p>
+</div>
+<p>例如你可以运行以下命令(假设节点ID为1):</p>
+<div class="highlight-python"><pre>cd bin
+./zabbix_server -n 1 -c /usr/local/etc/zabbix_server.conf</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p class="last">使用-n参数运行zabbix_server 并不会启动服务进程.</p>
+</div>
+<p>建立的过程非常简单，假设我们使用本节点(NodeID=1)作为主(master)节点， 继续配置其他节点作为子(child)节点, 使用相同的方法，只是使用不用的节点id,如&#8216;2&#8217;.
+两个节点配置完成后，是时候在Zabbix前端添加它们以建立主-子(master-child)关系.</p>
+</div>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id13">前端配置(主节点)</a><a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>配置在主节点上进行，打开它的Zabbix前端:</p>
+<blockquote>
+<div><ul class="simple">
+<li>前往 <em>Administration</em> -&gt; <em>DM</em></li>
+<li>选择 右侧下拉框中的 <em>Nodes</em></li>
+<li>点击 <em>Local node</em> 去查看它的参数</li>
+</ul>
+</div></blockquote>
+<img alt="../../_images/node_local.png" src="../../_images/node_local.png" />
+<p>节点选项如下:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="86%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">参数</th>
+<th class="head">描述</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Name</td>
+<td>唯一的节点名称</td>
+</tr>
+<tr class="row-odd"><td>Id</td>
+<td>唯一的节点ID，该值来源于配置文件中 <strong>NodeID</strong></td>
+</tr>
+<tr class="row-even"><td>Type</td>
+<td><strong>Local</strong> - 本节点节点</td>
+</tr>
+<tr class="row-odd"><td>IP</td>
+<td>本节点IP地址, Zabbix trapper必须在本地址上监听端口</td>
+</tr>
+<tr class="row-even"><td>Port</td>
+<td>本节点端口. Zabbix trapper必须监听本端口，默认为10051</td>
+</tr>
+</tbody>
+</table>
+<p>接下来添加子节点:</p>
+<blockquote>
+<div><ul class="simple">
+<li>在 <em>Administration</em> -&gt; <em>DM</em> 中点击 <em>New node</em></li>
+</ul>
+</div></blockquote>
+<img alt="../../_images/node_b.png" src="../../_images/node_b.png" />
+<p>节点参数:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Name</td>
+<td>唯一的子节点名称</td>
+</tr>
+<tr class="row-even"><td>Id</td>
+<td>唯一的节点ID，该值来源于子节点配置文件的 <strong>NodeID</strong></td>
+</tr>
+<tr class="row-odd"><td>Type</td>
+<td>可供选择的参数有:
+<strong>Child</strong>  - 子节点
+<strong>Master</strong>  - 主节点</td>
+</tr>
+<tr class="row-even"><td>Master node</td>
+<td>选择该子节点的主节点</td>
+</tr>
+<tr class="row-odd"><td>IP</td>
+<td>子节点IP地址. Zabbix trapper必须在本地址上进行监听</td>
+</tr>
+<tr class="row-even"><td>Port</td>
+<td>子节点的端口号. Zabbix trapper必须在本端口上进行监听，默认为10051</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="id6">
+<h2><a class="toc-backref" href="#id14">前端配置(子节点)</a><a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>配置在子节点上进行，打开它的Zabbix前端:</p>
+<blockquote>
+<div><ul class="simple">
+<li>前往 <em>Administration</em> -&gt; <em>DM</em></li>
+<li>选择 右侧下拉框中的 <em>Nodes</em></li>
+<li>点击 <em>Local node</em> 去查看它的参数(接下来你将看到如何去配置本节点)</li>
+</ul>
+</div></blockquote>
+<p>然后添加主节点:</p>
+<blockquote>
+<div><ul class="simple">
+<li>在 <em>Administration</em> -&gt; <em>DM</em> 中点击 <em>New node</em></li>
+</ul>
+</div></blockquote>
+<img alt="../../_images/node_a.png" src="../../_images/node_a.png" />
+<p>节点参数：</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Name</td>
+<td>唯一的主节点名称</td>
+</tr>
+<tr class="row-even"><td>Id</td>
+<td>唯一的主节点ID，该值来源于主节点配置文件的 <strong>NodeID</strong></td>
+</tr>
+<tr class="row-odd"><td>Type</td>
+<td>可供选择的参数有:
+<strong>Child</strong>  - 子节点
+<strong>Master</strong>  - 主节点</td>
+</tr>
+<tr class="row-even"><td>IP</td>
+<td>主节点IP地址. 主节点的Zabbix trapper必须在本地址上进行监听</td>
+</tr>
+<tr class="row-odd"><td>Port</td>
+<td>主节点的端口号. 主节点的Zabbix trapper必须在本端口上进行监听，默认为10051</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="server">
+<h3><a class="toc-backref" href="#id15">启动server守护进程</a><a class="headerlink" href="#server" title="永久链接至标题">¶</a></h3>
+<p>完成简单的分布式配置后，可以启动zabbix_server，使其作为主节点的守护进程.</p>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><a class="toc-backref" href="#id16">显示</a><a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>就如刚才节点的配置，在Zabbix前端的节点下拉框中将有一个或多个节点.</p>
+<img alt="../../_images/node_current.png" src="../../_images/node_current.png" />
+<p>选择一个，前端将会列出选择节点的所有信息.</p>
+</div>
+<div class="section" id="id8">
+<h2><a class="toc-backref" href="#id17">更复杂的配置</a><a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<p>你可以建立更复杂，更多层级的监控.</p>
+<p>接下来的例子中，Rigo(Node 4)将收集所有子节点的事件和历史数据.</p>
+<img alt="../../_images/confguring_nodes8.png" src="../../_images/confguring_nodes8.png" />
+</div>
 </div>
 
 
@@ -63,6 +277,25 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2 节点</a><ul>
+<li><a class="reference internal" href="#id2">概述</a></li>
+<li><a class="reference internal" href="#id3">配置</a><ul>
+<li><a class="reference internal" href="#id4">节点配置</a></li>
+<li><a class="reference internal" href="#id5">前端配置(主节点)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6">前端配置(子节点)</a><ul>
+<li><a class="reference internal" href="#server">启动server守护进程</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7">显示</a></li>
+<li><a class="reference internal" href="#id8">更复杂的配置</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>上一个主题</h4>
   <p class="topless"><a href="../proxies/index.html"
                         title="上一章">1 代理</a></p>
@@ -104,7 +337,7 @@
           <a href="../proxies/index.html" title="1 代理"
              >上一页</a> |</li>
         <li><a href="../../index.html">Zabbix Manual in Chinese</a> &raquo;</li>
-          <li><a href="../index.html" >14. 分布式监控 (进行中)</a> &raquo;</li> 
+          <li><a href="../index.html" >14. 分布式监控</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
