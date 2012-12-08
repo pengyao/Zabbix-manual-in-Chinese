@@ -1,0 +1,228 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3 Agent &mdash; Zabbix Manual in Chinese</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="top" title="Zabbix Manual in Chinese" href="../../index.html" />
+    <link rel="up" title="2. Zabbix术语 (进行中)" href="../index.html" />
+    <link rel="next" title="3. 安装 (尚未开始)" href="../../installation/index.html" />
+    <link rel="prev" title="2 Server" href="../server/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../installation/index.html" title="3. 安装 (尚未开始)"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="../server/index.html" title="2 Server"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../../index.html">Zabbix Manual in Chinese</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">2. Zabbix术语 (进行中)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="agent">
+<h1><a class="toc-backref" href="#id3">3  Agent</a><a class="headerlink" href="#agent" title="永久链接至标题">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#agent" id="id3">3  Agent</a><ul>
+<li><a class="reference internal" href="#id1" id="id4">概述</a></li>
+<li><a class="reference internal" href="#id2" id="id5">支持的平台</a></li>
+<li><a class="reference internal" href="#unixagent" id="id6">UNIX平台Agent进程(独立守护进程)</a></li>
+<li><a class="reference internal" href="#windowsagent" id="id7">在Windows上运行agent</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id4">概述</a><a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>Zabbix agent部署在被监控机器上用来监控本地资源和应用（如硬盘、内存、处理器统计等）.</p>
+<p>Zabbix agent聚合本地的运行信息并将数据发送给Zabbix server以进一步处理. 一旦出现异常(如硬盘空间满的情况或者服务进行宕掉), Zabbix server将会发送告警给管理员报告本次异常.</p>
+<p>Zabbix agent利用本地系统调用完成统计信息收集，因此它非常的高效.</p>
+<blockquote>
+<div><p><strong>被动(passive)和主动(active)检查</strong></p>
+<p>Zabbix agent提供被动和主动检查方式.</p>
+<p>在 <cite>被动检查</cite> 模式中agent应答数据请求，Zabbix server或者proxy询问agent数据,如CPU load, 然后Zabbix agent回送结果给server.</p>
+<p><cite>主动检查</cite> 处理过程将相对复杂. agent必须首先进行一次请求Zabbix server索取监控项列表，然后发送对应的值给server.</p>
+<p>选择是被动还是主动检查，需要在 <cite>监控项类型</cite> 中选择&#8217;Zabbix agent&#8217;或者&#8217;Zabbix agent (active)&#8217;.</p>
+</div></blockquote>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id5">支持的平台</a><a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>Zabbix agent支持以下平台:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Linux</li>
+<li>IBM AIX</li>
+<li>FreeBSD</li>
+<li>NetBSD</li>
+<li>OpenBSD</li>
+<li>HP-UX</li>
+<li>Mac OS X</li>
+<li>Solaris</li>
+<li>Windows: 2000, Server 2003, XP, Vista, Server 2008, 7</li>
+</ul>
+<p><strong>安装</strong></p>
+<p>安装相关信息请查看 <cite>安装说明</cite> 相关章节.</p>
+</div></blockquote>
+</div>
+<div class="section" id="unixagent">
+<h2><a class="toc-backref" href="#id6">UNIX平台Agent进程(独立守护进程)</a><a class="headerlink" href="#unixagent" title="永久链接至标题">¶</a></h2>
+<p>Zabbix agent运行在被监控主机上，可以通过守护进行的方式运行.</p>
+<p>运行Zabbix agent,通过以下命令:</p>
+<div class="highlight-python"><pre>shell&gt; cd sbin
+shell&gt; ./zabbix_agentd</pre>
+</div>
+<p>运行Zabbix agent时可以指定如下命令行参数:</p>
+<div class="highlight-python"><pre>-c --config &lt;file&gt;                 指定配置文件，默认的为 /etc/zabbix/zabbix_agentd.conf
+-h --help                          显示本帮助
+-V --version                       显示agent版本号
+-p --print                         显示已知的监控项并退出
+-t --test &lt;item key&gt;               测试指定的监控项并退出</pre>
+</div>
+<p>例如想查询帮助信息，可以执行:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">shell</span><span class="o">&gt;</span> <span class="n">zabbix_agentd</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+</div>
+<p>命令行参数的例子如:</p>
+<div class="highlight-python"><pre>shell&gt; zabbix_agentd -c /usr/local/etc/zabbix_agentd.conf
+shell&gt; zabbix_agentd --help
+shell&gt; zabbix_agentd --print
+shell&gt; zabbix_agentd -t "system.cpu.load[all,avg1]"</pre>
+</div>
+<p><strong>运行用户</strong></p>
+<p>Zabbix agent设计运行在非root账户下，因此它可以完美运行在启动时的非root账户.</p>
+<p>如果你在&#8217;root&#8217;账户下启动Zabbix agent，它将自动选择在操作系统中建立的&#8217;zabbix&#8217;用户,除非你修改agent配置文件中&#8217;AllowRoot&#8217;参数。</p>
+<p><strong>配置文件</strong></p>
+<p>对于zabbix_agentd的配置详细描述请查看 <cite>配置文件</cite> 章节.</p>
+</div>
+<div class="section" id="windowsagent">
+<h2><a class="toc-backref" href="#id7">在Windows上运行agent</a><a class="headerlink" href="#windowsagent" title="永久链接至标题">¶</a></h2>
+<p>安装方法请查看 <cite>安装Windows agent</cite> 章节.</p>
+<p>运行agent服务可以使用控制面板或者运行:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">zabbix_agentd</span><span class="o">.</span><span class="n">exe</span> <span class="o">--</span><span class="n">start</span>
+</pre></div>
+</div>
+<p>命令行语法有:</p>
+<div class="highlight-python"><pre>zabbix_agentd.exe [-Vhp] [-idsx] [-c &lt;file&gt;] [-t &lt;metric&gt;]</pre>
+</div>
+<p>可以在Zabbix windows agent命令行使用的选项如下:</p>
+<div class="highlight-python"><pre>-c --config &lt;file&gt;                       指定配置文件(默认为c:\zabbix_agentd.conf)
+-h --help                                显示帮助信息
+-V --version                             显示版本号
+-p --print                               显示已知的监控项并退出
+-t --test &lt;item key&gt;                     显示指定的监控项并退出</pre>
+</div>
+<p>功能方法如下:</p>
+<div class="highlight-python"><pre>-i --install              作为服务安装Zabbix agent
+-d --uninstall            卸载Zabbix agent服务
+-s --start                启动Zabbix agent服务
+-x --stop                 关闭Zabbix agent服务</pre>
+</div>
+<p><strong>配置文件</strong></p>
+<blockquote>
+<div>Zabbix Windows agent配置文件选项请查看 <cite>配置文件</cite> 章节.</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3  Agent</a><ul>
+<li><a class="reference internal" href="#id1">概述</a></li>
+<li><a class="reference internal" href="#id2">支持的平台</a></li>
+<li><a class="reference internal" href="#unixagent">UNIX平台Agent进程(独立守护进程)</a></li>
+<li><a class="reference internal" href="#windowsagent">在Windows上运行agent</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="../server/index.html"
+                        title="上一章">2 Server</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="../../installation/index.html"
+                        title="下一章">3. 安装 (尚未开始)</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/concepts/agent/index.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="搜索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的模块，术语，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../installation/index.html" title="3. 安装 (尚未开始)"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="../server/index.html" title="2 Server"
+             >上一页</a> |</li>
+        <li><a href="../../index.html">Zabbix Manual in Chinese</a> &raquo;</li>
+          <li><a href="../index.html" >2. Zabbix术语 (进行中)</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; 版权所有 2012, pengyao.
+      最后更新日期是 2012-12-08.
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

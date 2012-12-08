@@ -7,3 +7,4 @@
    
    definitons/index
    server/index
+   agent/index
