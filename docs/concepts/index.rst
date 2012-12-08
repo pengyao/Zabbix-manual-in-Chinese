@@ -10,3 +10,5 @@
    agent/index
    proxy/index
    java/index
+   sender/index
+   get/index
