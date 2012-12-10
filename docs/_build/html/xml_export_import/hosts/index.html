@@ -1,0 +1,811 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>主机 &mdash; Zabbix Manual in Chinese</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="top" title="Zabbix Manual in Chinese" href="../../index.html" />
+    <link rel="up" title="12. 配置导入/导出" href="../index.html" />
+    <link rel="next" title="13. 自动发现 (尚未开始)" href="../../discovery/index.html" />
+    <link rel="prev" title="组" href="../groups/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../discovery/index.html" title="13. 自动发现 (尚未开始)"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="../groups/index.html" title="组"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../../index.html">Zabbix Manual in Chinese</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">12. 配置导入/导出</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>主机<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<ul class="simple">
+<li>贡献者： Nexpro (<a class="reference external" href="https://github.com/nexpro">https://github.com/nexpro</a>)</li>
+</ul>
+<p>Hosts are exported with many related objects and object relations.</p>
+<dl class="docutils">
+<dt>主机导出包含:</dt>
+<dd><ul class="first last simple">
+<li>主机数据</li>
+<li>主机间隔数据</li>
+<li>组关系</li>
+<li>模板关系</li>
+<li>接口</li>
+<li>宏</li>
+<li>应用</li>
+<li>项目</li>
+<li>所有原型的发现规则</li>
+</ul>
+</dd>
+</dl>
+<p>当主机导入或者更新是,它只能链接到附加的模板同时不能从任何地方取消关联</p>
+<div class="highlight-python"><pre>&lt;hosts&gt;
+    &lt;host&gt;
+        &lt;host&gt;Zabbix server&lt;/host&gt;
+        &lt;name&gt;Zabbix server&lt;/name&gt;
+        &lt;proxy/&gt;
+        &lt;status&gt;0&lt;/status&gt;
+        &lt;ipmi_authtype&gt;-1&lt;/ipmi_authtype&gt;
+        &lt;ipmi_privilege&gt;2&lt;/ipmi_privilege&gt;
+        &lt;ipmi_username/&gt;
+        &lt;ipmi_password/&gt;
+        &lt;templates/&gt;
+        &lt;groups&gt;
+            &lt;group&gt;
+                &lt;name&gt;Zabbix servers&lt;/name&gt;
+            &lt;/group&gt;
+        &lt;/groups&gt;
+        &lt;interfaces&gt;
+            &lt;interface&gt;
+                &lt;default&gt;1&lt;/default&gt;
+                &lt;type&gt;1&lt;/type&gt;
+                &lt;useip&gt;1&lt;/useip&gt;
+                &lt;ip&gt;127.0.0.1&lt;/ip&gt;
+                &lt;dns/&gt;
+                &lt;port&gt;20001&lt;/port&gt;
+                &lt;interface_ref&gt;if1&lt;/interface_ref&gt;
+            &lt;/interface&gt;
+        &lt;/interfaces&gt;
+        &lt;applications&gt;
+            &lt;application&gt;
+                &lt;name&gt;Memory&lt;/name&gt;
+            &lt;/application&gt;
+            &lt;application&gt;
+                &lt;name&gt;Zabbix agent&lt;/name&gt;
+            &lt;/application&gt;
+        &lt;/applications&gt;
+        &lt;items&gt;
+            &lt;item&gt;
+                &lt;name&gt;Agent ping&lt;/name&gt;
+                &lt;type&gt;0&lt;/type&gt;
+                &lt;snmp_community/&gt;
+                &lt;multiplier&gt;0&lt;/multiplier&gt;
+                &lt;snmp_oid/&gt;
+                &lt;key&gt;agent.ping&lt;/key&gt;
+                &lt;delay&gt;60&lt;/delay&gt;
+                &lt;history&gt;7&lt;/history&gt;
+                &lt;trends&gt;365&lt;/trends&gt;
+                &lt;status&gt;0&lt;/status&gt;
+                &lt;value_type&gt;3&lt;/value_type&gt;
+                &lt;allowed_hosts/&gt;
+                &lt;units/&gt;
+                &lt;delta&gt;0&lt;/delta&gt;
+                &lt;snmpv3_securityname/&gt;
+                &lt;snmpv3_securitylevel&gt;0&lt;/snmpv3_securitylevel&gt;
+                &lt;snmpv3_authpassphrase/&gt;
+                &lt;snmpv3_privpassphrase/&gt;
+                &lt;formula&gt;1&lt;/formula&gt;
+                &lt;delay_flex/&gt;
+                &lt;params/&gt;
+                &lt;ipmi_sensor/&gt;
+                &lt;data_type&gt;0&lt;/data_type&gt;
+                &lt;authtype&gt;0&lt;/authtype&gt;
+                &lt;username/&gt;
+                &lt;password/&gt;
+                &lt;publickey/&gt;
+                &lt;privatekey/&gt;
+                &lt;port/&gt;
+                &lt;description&gt;The agent always returns 1 for this item. It could be used in combination with
+                                    nodata() for availability check.&lt;/description&gt;
+                &lt;inventory_link&gt;0&lt;/inventory_link&gt;
+                &lt;applications&gt;
+                    &lt;application&gt;
+                        &lt;name&gt;Zabbix agent&lt;/name&gt;
+                    &lt;/application&gt;
+                &lt;/applications&gt;
+                &lt;valuemap&gt;
+                    &lt;name&gt;Zabbix agent ping status&lt;/name&gt;
+                &lt;/valuemap&gt;
+                &lt;interface_ref&gt;if1&lt;/interface_ref&gt;
+            &lt;/item&gt;
+            &lt;item&gt;
+                &lt;name&gt;Available memory&lt;/name&gt;
+                &lt;type&gt;0&lt;/type&gt;
+                &lt;snmp_community/&gt;
+                &lt;multiplier&gt;0&lt;/multiplier&gt;
+                &lt;snmp_oid/&gt;
+                &lt;key&gt;vm.memory.size[available]&lt;/key&gt;
+                &lt;delay&gt;60&lt;/delay&gt;
+                &lt;history&gt;7&lt;/history&gt;
+                &lt;trends&gt;365&lt;/trends&gt;
+                &lt;status&gt;0&lt;/status&gt;
+                &lt;value_type&gt;3&lt;/value_type&gt;
+                &lt;allowed_hosts/&gt;
+                &lt;units&gt;B&lt;/units&gt;
+                &lt;delta&gt;0&lt;/delta&gt;
+                &lt;snmpv3_securityname/&gt;
+                &lt;snmpv3_securitylevel&gt;0&lt;/snmpv3_securitylevel&gt;
+                &lt;snmpv3_authpassphrase/&gt;
+                &lt;snmpv3_privpassphrase/&gt;
+                &lt;formula&gt;1&lt;/formula&gt;
+                &lt;delay_flex/&gt;
+                &lt;params/&gt;
+                &lt;ipmi_sensor/&gt;
+                &lt;data_type&gt;0&lt;/data_type&gt;
+                &lt;authtype&gt;0&lt;/authtype&gt;
+                &lt;username/&gt;
+                &lt;password/&gt;
+                &lt;publickey/&gt;
+                &lt;privatekey/&gt;
+                &lt;port/&gt;
+                &lt;description&gt;Available memory is defined as free+cached+buffers memory.&lt;/description&gt;
+                &lt;inventory_link&gt;0&lt;/inventory_link&gt;
+                &lt;applications&gt;
+                    &lt;application&gt;
+                        &lt;name&gt;Memory&lt;/name&gt;
+                    &lt;/application&gt;
+                &lt;/applications&gt;
+                &lt;valuemap/&gt;
+                &lt;interface_ref&gt;if1&lt;/interface_ref&gt;
+            &lt;/item&gt;
+        &lt;/items&gt;
+        &lt;discovery_rules&gt;
+            &lt;discovery_rule&gt;
+                &lt;name&gt;Mounted filesystem discovery&lt;/name&gt;
+                &lt;type&gt;0&lt;/type&gt;
+                &lt;snmp_community/&gt;
+                &lt;snmp_oid/&gt;
+                &lt;key&gt;vfs.fs.discovery&lt;/key&gt;
+                &lt;delay&gt;3600&lt;/delay&gt;
+                &lt;status&gt;0&lt;/status&gt;
+                &lt;allowed_hosts/&gt;
+                &lt;snmpv3_securityname/&gt;
+                &lt;snmpv3_securitylevel&gt;0&lt;/snmpv3_securitylevel&gt;
+                &lt;snmpv3_authpassphrase/&gt;
+                &lt;snmpv3_privpassphrase/&gt;
+                &lt;delay_flex/&gt;
+                &lt;params/&gt;
+                &lt;ipmi_sensor/&gt;
+                &lt;authtype&gt;0&lt;/authtype&gt;
+                &lt;username/&gt;
+                &lt;password/&gt;
+                &lt;publickey/&gt;
+                &lt;privatekey/&gt;
+                &lt;port/&gt;
+                &lt;filter&gt;{#FSTYPE}:@File systems for discovery&lt;/filter&gt;
+                &lt;lifetime&gt;30&lt;/lifetime&gt;
+                &lt;description&gt;Discovery of file systems of different types as defined in global regular
+                                    expression &amp;quot;File systems for discovery&amp;quot;.&lt;/description&gt;
+                &lt;item_prototypes&gt;
+                    &lt;item_prototype&gt;
+                        &lt;name&gt;Free disk space on $1&lt;/name&gt;
+                        &lt;type&gt;0&lt;/type&gt;
+                        &lt;snmp_community/&gt;
+                        &lt;multiplier&gt;0&lt;/multiplier&gt;
+                        &lt;snmp_oid/&gt;
+                        &lt;key&gt;vfs.fs.size[{#FSNAME},free]&lt;/key&gt;
+                        &lt;delay&gt;60&lt;/delay&gt;
+                        &lt;history&gt;7&lt;/history&gt;
+                        &lt;trends&gt;365&lt;/trends&gt;
+                        &lt;status&gt;0&lt;/status&gt;
+                        &lt;value_type&gt;3&lt;/value_type&gt;
+                        &lt;allowed_hosts/&gt;
+                        &lt;units&gt;B&lt;/units&gt;
+                        &lt;delta&gt;0&lt;/delta&gt;
+                        &lt;snmpv3_securityname/&gt;
+                        &lt;snmpv3_securitylevel&gt;0&lt;/snmpv3_securitylevel&gt;
+                        &lt;snmpv3_authpassphrase/&gt;
+                        &lt;snmpv3_privpassphrase/&gt;
+                        &lt;formula&gt;1&lt;/formula&gt;
+                        &lt;delay_flex/&gt;
+                        &lt;params/&gt;
+                        &lt;ipmi_sensor/&gt;
+                        &lt;data_type&gt;0&lt;/data_type&gt;
+                        &lt;authtype&gt;0&lt;/authtype&gt;
+                        &lt;username/&gt;
+                        &lt;password/&gt;
+                        &lt;publickey/&gt;
+                        &lt;privatekey/&gt;
+                        &lt;port/&gt;
+                        &lt;description/&gt;
+                        &lt;inventory_link&gt;0&lt;/inventory_link&gt;
+                        &lt;applications&gt;
+                            &lt;application&gt;
+                                &lt;name&gt;Filesystems&lt;/name&gt;
+                            &lt;/application&gt;
+                        &lt;/applications&gt;
+                        &lt;valuemap/&gt;
+                        &lt;interface_ref&gt;if1&lt;/interface_ref&gt;
+                    &lt;/item_prototype&gt;
+                &lt;/item_prototypes&gt;
+                &lt;trigger_prototypes&gt;
+                    &lt;trigger_prototype&gt;
+                        &lt;expression&gt;{Zabbix server 2:vfs.fs.size[{#FSNAME},pfree].last(0)}&amp;lt;20&lt;/expression&gt;
+                        &lt;name&gt;Free disk space is less than 20% on volume {#FSNAME}&lt;/name&gt;
+                        &lt;url/&gt;
+                        &lt;status&gt;0&lt;/status&gt;
+                        &lt;priority&gt;2&lt;/priority&gt;
+                        &lt;description/&gt;
+                        &lt;type&gt;0&lt;/type&gt;
+                    &lt;/trigger_prototype&gt;
+                &lt;/trigger_prototypes&gt;
+                &lt;graph_prototypes&gt;
+                    &lt;graph_prototype&gt;
+                        &lt;name&gt;Disk space usage {#FSNAME}&lt;/name&gt;
+                        &lt;width&gt;600&lt;/width&gt;
+                        &lt;height&gt;340&lt;/height&gt;
+                        &lt;yaxismin&gt;0.0000&lt;/yaxismin&gt;
+                        &lt;yaxismax&gt;0.0000&lt;/yaxismax&gt;
+                        &lt;show_work_period&gt;0&lt;/show_work_period&gt;
+                        &lt;show_triggers&gt;0&lt;/show_triggers&gt;
+                        &lt;type&gt;2&lt;/type&gt;
+                        &lt;show_legend&gt;1&lt;/show_legend&gt;
+                        &lt;show_3d&gt;1&lt;/show_3d&gt;
+                        &lt;percent_left&gt;0.0000&lt;/percent_left&gt;
+                        &lt;percent_right&gt;0.0000&lt;/percent_right&gt;
+                        &lt;ymin_type_1&gt;0&lt;/ymin_type_1&gt;
+                        &lt;ymax_type_1&gt;0&lt;/ymax_type_1&gt;
+                        &lt;ymin_item_1&gt;0&lt;/ymin_item_1&gt;
+                        &lt;ymax_item_1&gt;0&lt;/ymax_item_1&gt;
+                        &lt;graph_items&gt;
+                            &lt;graph_item&gt;
+                                &lt;sortorder&gt;0&lt;/sortorder&gt;
+                                &lt;drawtype&gt;0&lt;/drawtype&gt;
+                                &lt;color&gt;C80000&lt;/color&gt;
+                                &lt;yaxisside&gt;0&lt;/yaxisside&gt;
+                                &lt;calc_fnc&gt;2&lt;/calc_fnc&gt;
+                                &lt;type&gt;2&lt;/type&gt;
+                                &lt;item&gt;
+                                    &lt;host&gt;Zabbix server 2&lt;/host&gt;
+                                    &lt;key&gt;vfs.fs.size[{#FSNAME},total]&lt;/key&gt;
+                                &lt;/item&gt;
+                            &lt;/graph_item&gt;
+                            &lt;graph_item&gt;
+                                &lt;sortorder&gt;1&lt;/sortorder&gt;
+                                &lt;drawtype&gt;0&lt;/drawtype&gt;
+                                &lt;color&gt;00C800&lt;/color&gt;
+                                &lt;yaxisside&gt;0&lt;/yaxisside&gt;
+                                &lt;calc_fnc&gt;2&lt;/calc_fnc&gt;
+                                &lt;type&gt;0&lt;/type&gt;
+                                &lt;item&gt;
+                                    &lt;host&gt;Zabbix server 2&lt;/host&gt;
+                                    &lt;key&gt;vfs.fs.size[{#FSNAME},free]&lt;/key&gt;
+                                &lt;/item&gt;
+                            &lt;/graph_item&gt;
+                        &lt;/graph_items&gt;
+                    &lt;/graph_prototype&gt;
+                &lt;/graph_prototypes&gt;
+                &lt;interface_ref&gt;if1&lt;/interface_ref&gt;
+            &lt;/discovery_rule&gt;
+        &lt;/discovery_rules&gt;
+        &lt;macros&gt;
+            &lt;macro&gt;
+                &lt;macro&gt;{$M1}&lt;/macro&gt;
+                &lt;value&gt;m1&lt;/value&gt;
+            &lt;/macro&gt;
+            &lt;macro&gt;
+                &lt;macro&gt;{$M2}&lt;/macro&gt;
+                &lt;value&gt;m2&lt;/value&gt;
+            &lt;/macro&gt;
+        &lt;/macros&gt;
+        &lt;inventory/&gt;
+    &lt;/host&gt;
+&lt;/hosts&gt;</pre>
+</div>
+<div class="section" id="hosts-host">
+<h2>hosts/host<a class="headerlink" href="#hosts-host" title="永久链接至标题">¶</a></h2>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="22%" />
+<col width="27%" />
+<col width="22%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">参数</th>
+<th class="head">类型</th>
+<th class="head">描述</th>
+<th class="head">详细信息</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>host</td>
+<td>字符串</td>
+<td>主机名</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>name</td>
+<td>字符串</td>
+<td>可见的主机名</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>status</td>
+<td>整数</td>
+<td>主机状态</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>proxy</td>
+<td>整数</td>
+<td>代理名称</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>ipmi_authtype</td>
+<td>整数</td>
+<td>IPMI认证类型</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>ipmi_privilege</td>
+<td>整数</td>
+<td>IPMI权限</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>ipmi_username</td>
+<td>字符串</td>
+<td>IPMI用户名</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>ipmi_password</td>
+<td>字符串</td>
+<td>IPMI密码</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="hosts-host-groups-group">
+<h2>hosts/host/groups/group<a class="headerlink" href="#hosts-host-groups-group" title="永久链接至标题">¶</a></h2>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="16%" />
+<col width="19%" />
+<col width="45%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">参数</th>
+<th class="head">类型</th>
+<th class="head">描述</th>
+<th class="head">详细信息</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td colspan="2">name        |   字符串</td>
+<td>组名</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="hosts-host-templates-template">
+<h2>hosts/host/templates/template<a class="headerlink" href="#hosts-host-templates-template" title="永久链接至标题">¶</a></h2>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="37%" />
+<col width="18%" />
+<col width="45%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">参数</th>
+<th class="head">类型</th>
+<th class="head">描述</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td rowspan="5">name</td>
+<td rowspan="5">整数</td>
+<td>接口状态</td>
+</tr>
+<tr class="row-odd"><td rowspan="2">0 - 不是默认接口</td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="2">1 - 默认接口</td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="2">type</td>
+<td rowspan="2">整数</td>
+<td rowspan="2">接口类型</td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td colspan="2" rowspan="4">&nbsp;</td>
+<td>1 - agent</td>
+</tr>
+<tr class="row-even"><td>2 - SNMP</td>
+</tr>
+<tr class="row-odd"><td>3 - IPMI</td>
+</tr>
+<tr class="row-even"><td>4 - JMX</td>
+</tr>
+<tr class="row-odd"><td>useip</td>
+<td>整数</td>
+<td>如何连接到主机</td>
+</tr>
+<tr class="row-even"><td colspan="2" rowspan="2">&nbsp;</td>
+<td>0 - 使用DNS名称</td>
+</tr>
+<tr class="row-odd"><td>1 - 使用IP地址</td>
+</tr>
+<tr class="row-even"><td>ip</td>
+<td>字符串</td>
+<td>ip地址,可以是ipv4或者ipv6</td>
+</tr>
+<tr class="row-odd"><td>dns</td>
+<td>字符串</td>
+<td>DNS名称</td>
+</tr>
+<tr class="row-even"><td>port</td>
+<td>字符串</td>
+<td>端口号</td>
+</tr>
+<tr class="row-odd"><td>interface_ref</td>
+<td>字符串</td>
+<td>在项目中使用的接口引用名称</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="hosts-host-interfaces-interface">
+<h2>hosts/host/interfaces/interface<a class="headerlink" href="#hosts-host-interfaces-interface" title="永久链接至标题">¶</a></h2>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="37%" />
+<col width="18%" />
+<col width="17%" />
+<col width="28%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">参数</th>
+<th class="head">类型</th>
+<th class="head">描述</th>
+<th class="head">详细信息</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>default</td>
+<td>整数</td>
+<td>主机名</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="hosts-host-items-item">
+<h2>hosts/host/items/item<a class="headerlink" href="#hosts-host-items-item" title="永久链接至标题">¶</a></h2>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="16%" />
+<col width="51%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">参数</th>
+<th class="head">类型</th>
+<th class="head">描述</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td rowspan="19">type</td>
+<td rowspan="19">整数</td>
+<td>Item type:</td>
+</tr>
+<tr class="row-odd"><td>0 - Zabbix agent</td>
+</tr>
+<tr class="row-even"><td>1 - SNMPv1</td>
+</tr>
+<tr class="row-odd"><td>2 - Trapper</td>
+</tr>
+<tr class="row-even"><td>3 - Simple check</td>
+</tr>
+<tr class="row-odd"><td>4 - SNMPv2</td>
+</tr>
+<tr class="row-even"><td>5 - Internal</td>
+</tr>
+<tr class="row-odd"><td>6 - SNMPv3</td>
+</tr>
+<tr class="row-even"><td>7 - Active check</td>
+</tr>
+<tr class="row-odd"><td>8 - Aggregate</td>
+</tr>
+<tr class="row-even"><td>9 - HTTP test (Web监控方案步骤)</td>
+</tr>
+<tr class="row-odd"><td>10 - External</td>
+</tr>
+<tr class="row-even"><td>11 - Database monitor</td>
+</tr>
+<tr class="row-odd"><td>12 - IPMI</td>
+</tr>
+<tr class="row-even"><td>13 - SSH</td>
+</tr>
+<tr class="row-odd"><td>14 - telnet</td>
+</tr>
+<tr class="row-even"><td>15 - Calculated</td>
+</tr>
+<tr class="row-odd"><td>16 - JMX</td>
+</tr>
+<tr class="row-even"><td>17 - SNMP trap</td>
+</tr>
+<tr class="row-odd"><td>snmp_community</td>
+<td>字符串</td>
+<td>SNMP 团体名</td>
+</tr>
+<tr class="row-even"><td>snmp_oid</td>
+<td>字符串</td>
+<td>SNMP OID</td>
+</tr>
+<tr class="row-odd"><td>port</td>
+<td>整数</td>
+<td>项目定制端口</td>
+</tr>
+<tr class="row-even"><td>name</td>
+<td>字符串</td>
+<td>项目名称</td>
+</tr>
+<tr class="row-odd"><td>key</td>
+<td>字符串</td>
+<td>项目关键字</td>
+</tr>
+<tr class="row-even"><td>delay</td>
+<td>整数</td>
+<td>检查间隔</td>
+</tr>
+<tr class="row-odd"><td>history</td>
+<td>整数</td>
+<td>历史数据保留天数(单位天)</td>
+</tr>
+<tr class="row-even"><td>trends</td>
+<td>整数</td>
+<td>趋势数据保留天数(单位天)</td>
+</tr>
+<tr class="row-odd"><td>status</td>
+<td>整数</td>
+<td>项目状态</td>
+</tr>
+<tr class="row-even"><td>value_type</td>
+<td>整数</td>
+<td>值类型</td>
+</tr>
+<tr class="row-odd"><td>trapper_hosts</td>
+<td>字符串</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>units</td>
+<td>字符串</td>
+<td>值单位</td>
+</tr>
+<tr class="row-odd"><td>multiplier</td>
+<td>整数</td>
+<td>值的乘数</td>
+</tr>
+<tr class="row-even"><td>delta</td>
+<td>整数</td>
+<td>Store values as delta</td>
+</tr>
+<tr class="row-odd"><td>snmpv3_securityname</td>
+<td>字符串</td>
+<td>SNMPv3 安全名称</td>
+</tr>
+<tr class="row-even"><td>snmpv3_securitylevel</td>
+<td>整数</td>
+<td>SNMPv3 安全级别</td>
+</tr>
+<tr class="row-odd"><td>snmpv3_authpassphrase</td>
+<td>字符串</td>
+<td>SNMPv3 认证口令</td>
+</tr>
+<tr class="row-even"><td>snmpv3_privpassphrase</td>
+<td>字符串</td>
+<td>SNMPv3 私有口令</td>
+</tr>
+<tr class="row-odd"><td>formula</td>
+<td>字符串</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>delay_flex</td>
+<td>字符串</td>
+<td>弹性延迟</td>
+</tr>
+<tr class="row-odd"><td>params</td>
+<td>字符串</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>ipmi_sensor</td>
+<td>字符串</td>
+<td>IPMI 传感器</td>
+</tr>
+<tr class="row-odd"><td>data_type</td>
+<td>整数</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>authtype</td>
+<td>整数</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>username</td>
+<td>字符串</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>password</td>
+<td>字符串</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>publickey</td>
+<td>字符串</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>privatekey</td>
+<td>字符串</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>interface_ref</td>
+<td>字符串</td>
+<td>主机接口引用</td>
+</tr>
+<tr class="row-even"><td>description</td>
+<td>字符串</td>
+<td>项目描述</td>
+</tr>
+<tr class="row-odd"><td>inventory_link</td>
+<td>整数</td>
+<td>主机间隔字段号,将更新项目返回的值</td>
+</tr>
+<tr class="row-even"><td>applications</td>
+<td>&nbsp;</td>
+<td>项目应用</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="hosts-host-items-item-applications-application">
+<h2>hosts/host/items/item/applications/application<a class="headerlink" href="#hosts-host-items-item-applications-application" title="永久链接至标题">¶</a></h2>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="37%" />
+<col width="18%" />
+<col width="17%" />
+<col width="28%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">参数</th>
+<th class="head">类型</th>
+<th class="head">描述</th>
+<th class="head">详细信息</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>name</td>
+<td>字符串</td>
+<td>应用名称</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">主机</a><ul>
+<li><a class="reference internal" href="#hosts-host">hosts/host</a></li>
+<li><a class="reference internal" href="#hosts-host-groups-group">hosts/host/groups/group</a></li>
+<li><a class="reference internal" href="#hosts-host-templates-template">hosts/host/templates/template</a></li>
+<li><a class="reference internal" href="#hosts-host-interfaces-interface">hosts/host/interfaces/interface</a></li>
+<li><a class="reference internal" href="#hosts-host-items-item">hosts/host/items/item</a></li>
+<li><a class="reference internal" href="#hosts-host-items-item-applications-application">hosts/host/items/item/applications/application</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="../groups/index.html"
+                        title="上一章">组</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="../../discovery/index.html"
+                        title="下一章">13. 自动发现  (尚未开始)</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/xml_export_import/hosts/index.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="搜索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的模块，术语，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../discovery/index.html" title="13. 自动发现 (尚未开始)"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="../groups/index.html" title="组"
+             >上一页</a> |</li>
+        <li><a href="../../index.html">Zabbix Manual in Chinese</a> &raquo;</li>
+          <li><a href="../index.html" >12. 配置导入/导出</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; 版权所有 2012, pengyao.
+      最后更新日期是 2012-12-10.
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

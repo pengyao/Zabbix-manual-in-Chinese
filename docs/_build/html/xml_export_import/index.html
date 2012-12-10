@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>12. 配置导入/导出 (尚未开始) &mdash; Zabbix Manual in Chinese</title>
+    <title>12. 配置导入/导出 &mdash; Zabbix Manual in Chinese</title>
     
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/translations.js"></script>
     <link rel="top" title="Zabbix Manual in Chinese" href="../index.html" />
-    <link rel="next" title="13. 自动发现 (尚未开始)" href="../discovery/index.html" />
+    <link rel="next" title="组" href="groups/index.html" />
     <link rel="prev" title="11. 事件知悉 (尚未开始)" href="../acknowledges/index.html" /> 
   </head>
   <body>
@@ -37,7 +37,7 @@
           <a href="../genindex.html" title="总目录"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="../discovery/index.html" title="13. 自动发现 (尚未开始)"
+          <a href="groups/index.html" title="组"
              accesskey="N">下一页</a> |</li>
         <li class="right" >
           <a href="../acknowledges/index.html" title="11. 事件知悉 (尚未开始)"
@@ -52,8 +52,76 @@
           <div class="body">
             
   <div class="section" id="id1">
-<h1>12. 配置导入/导出  (尚未开始)<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
-<p>尚未翻译</p>
+<h1><a class="toc-backref" href="#id4">12. 配置导入/导出</a><a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="groups/index.html">组</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hosts/index.html">主机</a></li>
+</ul>
+</div>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#id1" id="id4">12. 配置导入/导出</a><ul>
+<li><a class="reference internal" href="#id2" id="id5">关于导出的信息</a></li>
+<li><a class="reference internal" href="#id3" id="id6">关于导入的信息</a></li>
+<li><a class="reference internal" href="#xml" id="id7">XML基础格式</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<ul class="simple">
+<li>贡献者： Nexpro (<a class="reference external" href="https://github.com/nexpro">https://github.com/nexpro</a>)</li>
+</ul>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id5">关于导出的信息</a><a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>所有支持的元素都能导出到一个文件中</li>
+<li>从模板继承的主机和模板元素,不会被导出.</li>
+<li>LLD创建的元素和任何依赖于它们的元素将不会被导出.例如,如果创建了一个针对LLD规则生成的项目, 这样的触发器不能被导出</li>
+<li>用于web项目的触发器和图形不能导出</li>
+<li>在前端,配置中能被导出成XML格式,使用API的方式XML和JSON都支持</li>
+</ul>
+</div></blockquote>
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">在2.0.1之前处理不同的空标签语法不相同</p>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id6">关于导入的信息</a><a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>在遇到第一个错误时导入停止</li>
+<li>当在导入图片是更新一个已存在的图片,&#8221;imagetype&#8221;字段将被忽略,也就是说,不能够在导入时改变图片类型.</li>
+<li>空的项目,触发器,图形,主机/模板应用,发现规则,项目原型,触发器原型,图形原型标签是没有意义的,也就是说等同于漏掉它.其它的标签,例如项目应用是有意义的,空标签意味着项目中没有应用,漏掉标签意味着不更新应用</li>
+<li>导入对XML和JSON都支持,导入的文件的扩展名必选正确: .xml对应XML .json对应着JSON.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="xml">
+<h2><a class="toc-backref" href="#id7">XML基础格式</a><a class="headerlink" href="#xml" title="永久链接至标题">¶</a></h2>
+<div class="highlight-python"><pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;zabbix_export&gt;
+    &lt;version&gt;2.0&lt;/version&gt;
+    &lt;date&gt;2012-04-18T14:07:36Z&lt;/date&gt;
+&lt;/zabbix_export&gt;</pre>
+</div>
+<div class="highlight-python"><pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</pre>
+</div>
+<p>XML文档的默认头部</p>
+<div class="highlight-python"><pre>&lt;zabbix_export&gt;</pre>
+</div>
+<p>Zabbix XML导出的根元素</p>
+<div class="highlight-python"><pre>&lt;version&gt;2.0&lt;/version&gt;</pre>
+</div>
+<p>导入版本</p>
+<div class="highlight-python"><pre>&lt;date&gt;2012-04-18T14:07:36Z&lt;/date&gt;</pre>
+</div>
+<p>在导入的创建时间使用ISO 8601长格式.
+其他标签是依赖于导出的对象。</p>
+</div>
 </div>
 
 
@@ -62,12 +130,22 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">12. 配置导入/导出</a><ul>
+<li><a class="reference internal" href="#id2">关于导出的信息</a></li>
+<li><a class="reference internal" href="#id3">关于导入的信息</a></li>
+<li><a class="reference internal" href="#xml">XML基础格式</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>上一个主题</h4>
   <p class="topless"><a href="../acknowledges/index.html"
                         title="上一章">11. 事件知悉  (尚未开始)</a></p>
   <h4>下一个主题</h4>
-  <p class="topless"><a href="../discovery/index.html"
-                        title="下一章">13. 自动发现  (尚未开始)</a></p>
+  <p class="topless"><a href="groups/index.html"
+                        title="下一章">组</a></p>
   <h3>本页</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/xml_export_import/index.txt"
@@ -97,7 +175,7 @@
           <a href="../genindex.html" title="总目录"
              >索引</a></li>
         <li class="right" >
-          <a href="../discovery/index.html" title="13. 自动发现 (尚未开始)"
+          <a href="groups/index.html" title="组"
              >下一页</a> |</li>
         <li class="right" >
           <a href="../acknowledges/index.html" title="11. 事件知悉 (尚未开始)"
@@ -107,7 +185,7 @@
     </div>
     <div class="footer">
         &copy; 版权所有 2012, pengyao.
-      最后更新日期是 2012-12-01.
+      最后更新日期是 2012-12-10.
       使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
