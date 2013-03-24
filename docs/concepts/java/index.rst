@@ -147,7 +147,7 @@ Debugging Java gateway
       <appender-ref ref="FILE" />
    </root>	
 
-需要主机的是，并不像Zabbix server或proxy那样，修改完logback.xml并不需要重启Zabbix Java gateway. 修改后的配置将会自动被加载. 当你完成了debugging,你可以将log级别替换为"info".
+需要注意的是，并不像Zabbix server或proxy那样，修改完logback.xml并不需要重启Zabbix Java gateway. 修改后的配置将会自动被加载. 当你完成了debugging,你可以将log级别替换为"info".
 
 如果你想将日志记录到其他文件或者其他方式完成存储（如数据库），按照你的需求调整logback.xml文件即可。 欲了解更多请访问 `Logback手册 <http://logback.qos.ch/manual/>`_
 
