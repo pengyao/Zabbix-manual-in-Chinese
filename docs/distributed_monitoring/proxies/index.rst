@@ -7,7 +7,7 @@
 概述
 --------------------------
 
-Zabbix代理能够取代Zabbix server去收集性能和可行用数据. 因此代理常用于完成Zabbix server数据收集工作并降低server负载.
+Zabbix代理能够取代Zabbix server去收集性能和可用性数据. 因此代理常用于完成Zabbix server数据收集工作并降低server负载.
 
 同时，使用代理也是在集中和分布式监控中最简单的实现方案，所有的agent和代理数据将发送给一个Zabbix server,所有数据集中存储.
 
